@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>index-test</title>
+<title>test_index – FRONTEND_TEST_16062026_2009</title>
 <style>
 :root{
   --bg:#eaf0f4;
@@ -669,6 +669,101 @@ section.step[data-title="Einverständnis"]{
 .btn-copy{background:var(--green);color:white}
 .btn-copy:disabled{background:#9ca3af;cursor:not-allowed}
 .copy-status{font-size:13px;color:var(--muted)}
+
+
+/* Master_v2: Small Laptop Modus */
+@media (min-width:950px) and (max-width:1400px){
+  body{padding:18px;}
+  .step{padding:10px 0!important;}
+  .grid2,.grid3{gap:10px!important;}
+  input,select,textarea{min-height:36px;padding:8px;font-size:13px;}
+  .nav{margin-top:8px!important;}
+}
+
+/* Master_v3: aggressiver Kompaktmodus für kleine Laptops */
+@media (min-width:950px) and (max-width:1400px){
+  body{padding:12px!important;}
+  h1{font-size:28px!important;margin-bottom:2px!important;}
+  h2{font-size:18px!important;margin-bottom:6px!important;}
+  .step{padding:4px 0!important;}
+  .grid2,.grid3{gap:8px!important;}
+  input:not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea{
+    min-height:32px!important;
+    padding:6px 8px!important;
+    font-size:13px!important;
+  }
+  input[type="checkbox"],
+  input[type="radio"]{
+    width:17px!important;
+    height:17px!important;
+    min-height:17px!important;
+    padding:0!important;
+    flex:0 0 17px!important;
+  }
+  button{
+    padding:8px 13px!important;
+    font-size:13px!important;
+  }
+  .nav{margin-top:4px!important;}
+  .field-wrap{gap:2px!important;}
+  .field-label{font-size:12px!important;}
+  .lf-hint{
+    font-size:11px!important;
+    line-height:1.25!important;
+    margin-top:2px!important;
+  }
+  .report{padding:14px!important;}
+  .reportbox{
+    padding:10px!important;
+    font-size:13px!important;
+    line-height:1.35!important;
+  }
+  .copy-row{gap:6px!important;margin-top:8px!important;}
+}
+
+/* Master_v4: Einverständnis nach Ja kompakt halten */
+body.consent-ok section.step[data-title="Einverständnis"]{
+  padding:2px 0!important;
+}
+body.consent-ok section.step[data-title="Einverständnis"] > *:not(h2){
+  display:none!important;
+}
+body.consent-ok section.step[data-title="Einverständnis"] h2{
+  cursor:pointer;
+  padding:7px 12px!important;
+  margin:0!important;
+  border:1px solid #9fc8b2;
+  border-radius:8px;
+  background:#e5f3ec;
+}
+
+/* MASTER_V8: Nur Header-Abstände kleiner */
+@media (min-width:950px) and (max-width:1400px){
+  .step.done,
+  .step.todo{
+    padding:0 !important;
+    margin:0 !important;
+  }
+
+  .step.done + .step.done,
+  .step.done + .step.todo,
+  .step.todo + .step.done,
+  .step.todo + .step.todo{
+    margin-top:-4px !important;
+  }
+
+  .step.done:not(.open) h2,
+  .step.todo:not(.open) h2{
+    margin:0 !important;
+  }
+
+  .step.done + .step.open,
+  .step.todo + .step.open{
+    margin-top:-6px !important;
+  }
+}
 </style>
 </head>
 
@@ -711,6 +806,10 @@ section.step[data-title="Einverständnis"]{
         <optgroup label="Familie / Bilder / Kleidung">
           <option value="familie_geschwister">Eltern + Geschwister bei Bildern</option>
           <option value="kleidung_deckchen_erinnerung">Kleidung/Deckchen/Erinnerungsstücke</option>
+
+          <option value="familie_mutter">Familiensituation – Mutter</option>
+          <option value="familie_vater">Familiensituation – Vater</option>
+          <option value="familie_standard_eltern">Familiensituation – leer = Eltern</option>
         </optgroup>
       </select>
     </div>
@@ -846,7 +945,8 @@ Die Wassermethode kann helfen, die Haut zu stabilisieren.</p>
 </section>
 <section class="step" data-title="Eltern/Familie">
 <h2>Eltern und Familie</h2>
-<div class="grid2">
+<div class="grid3">
+<div class="field-wrap" id="familienSituationWrapField"><label class="field-label" for="familienSituation">Familiensituation</label><select id="familienSituation"><option value=""></option><option value="Mutter">Mutter</option><option value="Vater">Vater</option></select></div>
 <div class="field-wrap" id="kindFamilieWrapField"><label class="field-label" for="kindFamilie">Wievieltes Kind der Familie?</label><select id="kindFamilie"><option value=""></option><option value="1. Kind">1. Kind</option><option value="2. Kind">2. Kind</option><option value="3. Kind">3. Kind</option><option value="4. Kind">4. Kind</option><option value="5. Kind">5. Kind</option></select></div>
 <div class="field-wrap" id="kinderHandWrapField"><label class="field-label" for="kinderHand">Wieviele Kinder an der Hand?</label><select id="kinderHand"><option value=""></option><option value="keine Kinder an der Hand">keine Kinder an der Hand</option><option value="1 Kind an der Hand">1 Kind an der Hand</option><option value="2 Kinder an der Hand">2 Kinder an der Hand</option><option value="3 Kinder an der Hand">3 Kinder an der Hand</option><option value="4 Kinder an der Hand">4 Kinder an der Hand</option></select></div>
 </div>
@@ -2971,10 +3071,68 @@ function baueMehrlingssatz(){
 
 
 
+function getFamilienBezug(){
+  const familienSituation = val("familienSituation") || "Eltern";
+
+  const bezugMap = {
+    "Mutter": {
+      nominativ: "die Mutter",
+      nominativGross: "Die Mutter",
+      dativ: "der Mutter",
+      fuer: "Für die Mutter",
+      handPraedikat: "Sie hat",
+      bringt: "Die Mutter bringt",
+      bringtUnklar: "Ob die Mutter eigene Erinnerungsstücke mitbringen wird, ist aktuell nicht bekannt.",
+      bilderJa: "Die Mutter möchte bei den Bildern dabei sein.",
+      bilderNein: "Die Mutter möchte bei den Bildern nicht dabei sein.",
+      bilderUnklar: "Ob die Mutter mit auf die Bilder möchte, ist aktuell nicht bekannt.",
+      mitGeschwisterSingular: "Die Mutter und das Geschwisterkind werden bei den Bildern dabei sein.",
+      mitGeschwisterPlural: "Die Mutter und die Geschwister werden bei den Bildern dabei sein.",
+      sprichtWenigDeutsch: "Die Mutter spricht wenig Deutsch.",
+      sprichtKeinDeutsch: "Die Mutter spricht kein Deutsch."
+    },
+    "Vater": {
+      nominativ: "der Vater",
+      nominativGross: "Der Vater",
+      dativ: "dem Vater",
+      fuer: "Für den Vater",
+      handPraedikat: "Er hat",
+      bringt: "Der Vater bringt",
+      bringtUnklar: "Ob der Vater eigene Erinnerungsstücke mitbringen wird, ist aktuell nicht bekannt.",
+      bilderJa: "Der Vater möchte bei den Bildern dabei sein.",
+      bilderNein: "Der Vater möchte bei den Bildern nicht dabei sein.",
+      bilderUnklar: "Ob der Vater mit auf die Bilder möchte, ist aktuell nicht bekannt.",
+      mitGeschwisterSingular: "Der Vater und das Geschwisterkind werden bei den Bildern dabei sein.",
+      mitGeschwisterPlural: "Der Vater und die Geschwister werden bei den Bildern dabei sein.",
+      sprichtWenigDeutsch: "Der Vater spricht wenig Deutsch.",
+      sprichtKeinDeutsch: "Der Vater spricht kein Deutsch."
+    },
+    "Eltern": {
+      nominativ: "die Eltern",
+      nominativGross: "Die Eltern",
+      dativ: "den Eltern",
+      fuer: "Für die Eltern",
+      handPraedikat: "Sie haben",
+      bringt: "Die Eltern bringen",
+      bringtUnklar: "Ob die Eltern eigene Erinnerungsstücke mitbringen werden, ist aktuell nicht bekannt.",
+      bilderJa: "Die Eltern möchten bei den Bildern dabei sein.",
+      bilderNein: "Die Eltern möchten bei den Bildern nicht dabei sein.",
+      bilderUnklar: "Ob die Eltern mit auf die Bilder möchten, ist aktuell nicht bekannt.",
+      mitGeschwisterSingular: "Die Eltern und das Geschwisterkind werden bei den Bildern dabei sein.",
+      mitGeschwisterPlural: "Die Eltern und die Geschwister werden bei den Bildern dabei sein.",
+      sprichtWenigDeutsch: "Die Eltern sprechen wenig Deutsch.",
+      sprichtKeinDeutsch: "Die Eltern sprechen kein Deutsch."
+    }
+  };
+
+  return bezugMap[familienSituation] || bezugMap["Eltern"];
+}
+
 function baueFamiliensatz(){
   const kind = val("kindFamilie");
   const hand = val("kinderHand");
   const mehrlinge = val("mehrlinge");
+  const bezug = getFamilienBezug();
 
   const ord = {
     1: "erste",
@@ -3000,16 +3158,16 @@ function baueFamiliensatz(){
   let satz = "";
 
   if(mehrlinge.startsWith("Zwillinge")){
-    satz = `Für die Eltern wären die Zwillinge das ${ord[base]} und ${ord[base + 1]} Kind der Familie.`;
+    satz = `${bezug.fuer} wären die Zwillinge das ${ord[base]} und ${ord[base + 1]}${(val("familienSituation")||"Eltern")==="Eltern" ? " Kind der Familie." : " Kind."}`;
   }else if(mehrlinge.startsWith("Drillinge")){
-    satz = `Für die Eltern wären die Drillinge das ${ord[base]}, ${ord[base + 1]} und ${ord[base + 2]} Kind der Familie.`;
+    satz = `${bezug.fuer} wären die Drillinge das ${ord[base]}, ${ord[base + 1]} und ${ord[base + 2]}${(val("familienSituation")||"Eltern")==="Eltern" ? " Kind der Familie." : " Kind."}`;
   }else{
-    satz = `Für die Eltern wäre es das ${ord[base]} Kind der Familie.`;
+    satz = `${bezug.fuer} wäre es das ${ord[base]}${(val("familienSituation")||"Eltern")==="Eltern" ? " Kind der Familie." : " Kind."}`;
   }
 
   const handText = handMap[hand];
   if(handText && !(base === 1 && hand === "keine Kinder an der Hand")){
-    return `${satz} Sie haben ${handText}.`;
+    return `${satz} ${bezug.handPraedikat} ${handText}.`;
   }
 
   return satz;
@@ -3729,15 +3887,16 @@ const BilderReportController = {
     const elternBilder = val("elternDabei");
     const geschwisterBilder = val("geschwisterDabei");
     const geschwisterAktiv = $("geschwisterDabei") && !$("geschwisterDabei").disabled;
+    const bezug = getFamilienBezug();
 
     if(elternBilder === "Ja" && geschwisterAktiv && geschwisterBilder === "Ja"){
       bilder.push(geschwisterSingular
-        ? "Die Eltern und das Geschwisterkind werden bei den Bildern dabei sein."
-        : "Die Eltern und die Geschwister werden bei den Bildern dabei sein.");
+        ? bezug.mitGeschwisterSingular
+        : bezug.mitGeschwisterPlural);
     }else{
-      if(elternBilder === "Ja") bilder.push("Die Eltern möchten bei den Bildern dabei sein.");
-      if(elternBilder === "Nein") bilder.push("Die Eltern möchten bei den Bildern nicht dabei sein.");
-      if(elternBilder === "Unklar") bilder.push("Ob die Eltern mit auf die Bilder möchten, ist aktuell nicht bekannt.");
+      if(elternBilder === "Ja") bilder.push(bezug.bilderJa);
+      if(elternBilder === "Nein") bilder.push(bezug.bilderNein);
+      if(elternBilder === "Unklar") bilder.push(bezug.bilderUnklar);
 
       if(elternBilder === "Ja" && geschwisterAktiv){
         if(geschwisterBilder === "Ja"){
@@ -4269,6 +4428,65 @@ function frontendBase(){
 function loadFrontendTestCase(){
   const test = val("frontendTestSelect");
   if(!test) return;
+
+
+  if(test === "familie_mutter"){
+    frontendResetForm();
+    frontendBase();
+    frontendSetValue("aktuelleSituation", "verstorben");
+    frontendSetValue("familienSituation", "Mutter");
+    frontendSetValue("kindFamilie", "2. Kind");
+    if(typeof syncKinderHand === "function") syncKinderHand();
+    frontendSetValue("kinderHand", "1 Kind an der Hand");
+    frontendSetValue("elternDabei", "Ja");
+    frontendSetValue("kleidung", "Ja");
+    frontendSetValue("deckchen", "Ja");
+    frontendSetValue("erinnerung", "Ja");
+    frontendSetValue("infektStatus", "Nein");
+    frontendSetValue("besonderheitStatus", "Nein");
+    frontendSetValue("abschlussfrage", "Wer kann sofort los?");
+    recalcAll();
+    return;
+  }
+
+  if(test === "familie_vater"){
+    frontendResetForm();
+    frontendBase();
+    frontendSetValue("aktuelleSituation", "verstorben");
+    frontendSetValue("familienSituation", "Vater");
+    frontendSetValue("kindFamilie", "3. Kind");
+    if(typeof syncKinderHand === "function") syncKinderHand();
+    frontendSetValue("kinderHand", "2 Kinder an der Hand");
+    frontendSetValue("elternDabei", "Ja");
+    frontendSetValue("kleidung", "Ja");
+    frontendSetValue("deckchen", "Ja");
+    frontendSetValue("erinnerung", "Ja");
+    frontendSetValue("infektStatus", "Nein");
+    frontendSetValue("besonderheitStatus", "Nein");
+    frontendSetValue("abschlussfrage", "Wer kann sofort los?");
+    recalcAll();
+    return;
+  }
+
+  if(test === "familie_standard_eltern"){
+    frontendResetForm();
+    frontendBase();
+    frontendSetValue("aktuelleSituation", "verstorben");
+    frontendSetValue("familienSituation", "");
+    frontendSetValue("kindFamilie", "2. Kind");
+    if(typeof syncKinderHand === "function") syncKinderHand();
+    frontendSetValue("kinderHand", "1 Kind an der Hand");
+    frontendSetValue("elternDabei", "Ja");
+    frontendSetValue("kleidung", "Ja");
+    frontendSetValue("deckchen", "Ja");
+    frontendSetValue("erinnerung", "Ja");
+    frontendSetValue("infektStatus", "Nein");
+    frontendSetValue("besonderheitStatus", "Nein");
+    frontendSetValue("abschlussfrage", "Wer kann sofort los?");
+    recalcAll();
+    return;
+  }
+
 
   frontendResetForm();
   frontendBase();
