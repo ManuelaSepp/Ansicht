@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>MASTER_2026-06-14_FIX10_ANRUFSATZ_ABSCHLUSSFRAGE – DSK Einsatzanforderung</title>
+<title>FRONTEND_TEST_16062026_1326 – Leitfaden</title>
 <style>
 :root{
   --bg:#eaf0f4;
@@ -342,7 +342,7 @@ body.admin-mode #abschlussfrageWrapField select{
 /* V4b: erledigte Abschnitte bleiben als anklickbare Kopfzeile sichtbar */
 .step.done{
   display:block;
-  padding:10px 0;
+  padding:5px 0;
 }
 .step.done:not(.open) > *:not(h2){
   display:none !important;
@@ -370,7 +370,7 @@ body.admin-mode #abschlussfrageWrapField select{
 .step.done,
 .step.todo{
   display:block;
-  padding:10px 0;
+  padding:5px 0;
 }
 .step.done:not(.open) > *:not(h2),
 .step.todo:not(.open) > *:not(h2){
@@ -434,57 +434,230 @@ body.admin-mode #abschlussfrageWrapField select{
 .report-urgent{font-weight:700;}
 
 
+/* FIX17: Bericht rechts sticky ab Tablet quer / Desktop */
+@media(min-width:950px){
+  .wrap{
+    max-width:1500px;
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 420px;
+    gap:24px;
+    align-items:start;
+  }
 
-/* FRONTEND_TEST_PANEL_V2_INLINE_LAYOUT */
-.frontend-test-panel{
-  display:grid;
-  grid-template-columns:360px 1fr;
-  gap:16px;
-  align-items:start;
-}
-.frontend-test-panel h2,
-.frontend-test-panel .lf-hint{
-  grid-column:1 / -1;
-}
-.frontend-test-row{
-  display:block;
-}
-.frontend-test-row .btn-next{
-  margin-top:10px;
-  width:100%;
-}
-.frontend-test-panel .frontend-test-preview{
-  display:block;
-}
-.frontend-test-panel .frontend-test-preview .report{
-  margin-top:0;
-}
-@media(max-width:900px){
-  .frontend-test-panel{
-    grid-template-columns:1fr;
+  .wrap > *:not(.report-step){
+    grid-column:1;
+  }
+
+  .step.report-step{
+    grid-column:2;
+    grid-row:1 / span 999;
+    position:sticky;
+    top:20px;
+    margin-top:0;
+    padding-top:0;
+  }
+
+  .step.report-step .report{
+    margin-top:0;
+  }
+
+  .reportbox{
+    max-height:calc(100vh - 190px);
+    overflow-y:auto;
   }
 }
 
-/* FRONTEND_TEST_PANEL_V1 */
+@media(max-width:949px){
+  .wrap{
+    display:block;
+  }
+
+  .step.report-step{
+    position:static;
+  }
+
+  .reportbox{
+    max-height:none;
+    overflow:visible;
+  }
+}
+
+
+/* FIX23: Wassermethode-Freitext ohne Zwischenabstand */
+#wasserWrapField{
+  gap:0;
+}
+#wasserErgaenzungWrapField{
+  margin-top:0!important;
+  padding-top:0!important;
+  gap:5px;
+}
+#wasserMethodeHinweise{
+  margin-top:7px;
+}
+
+
+/* FIX24: Wassermethode-Freitext direkt am Dropdown */
+#wasserWrapField > #wasserErgaenzungWrapField{
+  margin-top:0!important;
+  padding-top:0!important;
+}
+#wasserWrapField > #wasserErgaenzungWrapField .field-label{
+  display:block;
+  margin-top:0!important;
+  margin-bottom:5px;
+}
+#wasserWrapField > #wasserErgaenzungWrapField input{
+  display:block;
+}
+
+
+/* FIX25: Wassermethode-Freitext direkt unter Dropdown */
+#wasserWrapField .wasser-ergaenzung-label{
+  margin-top:2px!important;
+}
+#wasserWrapField #wasserErgaenzung{
+  margin-top:0!important;
+}
+
+
+/* FIX26: Wasser-Zusatzfeld fest direkt unter Dropdown */
+#wasserWrapField{
+  gap:0!important;
+}
+#wasserWrapField select#wasser{
+  margin-bottom:0!important;
+}
+#wasserErgaenzungWrapField.wasser-zusatz-direkt{
+  margin:2px 0 0 0!important;
+  padding:0!important;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+#wasserErgaenzungWrapField.wasser-zusatz-direkt.hidden{
+  display:none!important;
+}
+#wasserMethodeHinweise{
+  margin-top:7px!important;
+}
+
+
+/* FIX43: kleiner Scroll-Offset */
+.step{
+  scroll-margin-top:24px;
+}
+
+
+/* FIX46: noch kompaktere Kartenübersicht */
+.step.done,
+.step.todo{
+  padding:1px 0!important;
+  margin:0!important;
+  border-bottom:0!important;
+}
+.step.done:not(.open) h2,
+.step.todo:not(.open) h2{
+  padding:7px 12px!important;
+  margin:0!important;
+}
+.step.done + .step.done,
+.step.todo + .step.todo,
+.step.done + .step.todo,
+.step.todo + .step.done{
+  margin-top:0!important;
+}
+
+
+/* FIX53: Kopfbereich fix sichtbar + Abstand kleiner */
+h1{
+  margin:0 0 18px!important;
+}
+section.step[data-title="Einverständnis"]{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:var(--bg);
+  padding:10px 0 14px!important;
+  border-bottom:1px solid var(--line);
+}
+section.step[data-title="Einverständnis"] h2{
+  margin:0 0 10px!important;
+}
+section.step[data-title="Einverständnis"] label.option{
+  margin:6px 0!important;
+}
+
+
+/* FIX55: Feinschliff Kopfabstand + Resetbutton */
+h1{
+  margin-bottom:2px!important;
+}
+.wrap > p{
+  display:none!important;
+  margin:0!important;
+}
+section.step[data-title="Einverständnis"]{
+  padding-top:6px!important;
+}
+.btn-reset{
+  background:#ffffff;
+  color:#111827;
+  border:1px solid #ccd5dc;
+}
+.btn-reset:disabled{
+  background:#e5e7eb;
+  color:#9ca3af;
+  cursor:not-allowed;
+}
+
+
+/* FRONTEND_TEST_16062026_1326 */
 .frontend-test-panel{
-  background:#fff;
+  margin:0 0 14px;
+  padding:14px 16px;
   border:2px dashed #9db7d4;
-  border-radius:10px;
-  padding:14px;
-  margin:18px 0 22px;
+  border-radius:8px;
+  background:#f7fbff;
 }
 .frontend-test-panel h2{
   margin:0 0 10px;
-  font-size:19px;
+  font-size:18px;
 }
-.frontend-test-row{
+.frontend-test-grid{
   display:grid;
-  grid-template-columns:1fr auto;
+  grid-template-columns:1fr auto auto;
   gap:10px;
   align-items:end;
 }
-.frontend-test-panel .lf-hint{
+.frontend-test-custom{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.frontend-test-custom .wide{
+  grid-column:1 / -1;
+}
+.frontend-test-panel button{
+  background:var(--green);
+  color:#fff;
+}
+.frontend-test-panel .btn-secondary{
+  background:#fff;
+  color:#111827;
+  border:1px solid #ccd5dc;
+}
+.frontend-test-note{
   margin-top:8px;
+  font-size:13px;
+  color:var(--muted);
+}
+@media(max-width:900px){
+  .frontend-test-grid,
+  .frontend-test-custom{
+    grid-template-columns:1fr;
+  }
 }
 
 /* MASTER_2026-06-14_FIX05: Infektvalidierung + Kopieren */
@@ -502,112 +675,92 @@ body.admin-mode #abschlussfrageWrapField select{
 <!-- MASTER_DATEI: MASTER_2026-06-14 | Basis: V27g_Fix_baueFamiliensatz_Mehrlinge -->
 <body>
 <div class="wrap">
-<h1>Fotograf anfordern</h1>
-<p>Leitfadenmodus mit Weiter-Buttons. Jeder Abschnitt wird nacheinander geöffnet.</p>
 
-<section class="frontend-test-panel" id="frontendTestPanel">
-  <h2>Frontend-Testmodus</h2>
-  <div class="frontend-test-row">
+<section class="frontend-test-panel">
+  <h2>Frontend-Testung</h2>
+
+  <div class="frontend-test-grid">
     <div class="field-wrap">
-      <label class="field-label" for="frontendTestCase">Testsituation auswählen</label>
-      <select id="frontendTestCase">
+      <label class="field-label" for="frontendTestSelect">Testfall auswählen</label>
+      <select id="frontendTestSelect">
         <option value=""></option>
-
-        <optgroup label="Basis">
-          <option value="basis_verstorben_kind1">Basis – verstorben – 1. Kind</option>
-          <option value="basis_verstorben_kind2_keine_hand">Basis – verstorben – 2. Kind, keine Kinder an der Hand</option>
-          <option value="basis_verstorben_kind2_ein_hand">Basis – verstorben – 2. Kind, 1 Kind an der Hand</option>
-          <option value="basis_verstorben_kind3_zwei_hand">Basis – verstorben – 3. Kind, 2 Kinder an der Hand</option>
+        <optgroup label="Basis-Situationen">
+          <option value="verstorben_basis">verstorben – Basis</option>
+          <option value="noch_lebend_basis">noch lebend – Basis mit aktuellem Alter</option>
+          <option value="lebendbilder_kritisch">Lebendbilder – Zustand sehr kritisch</option>
+          <option value="bilder_nach_versterben_wm">noch lebend – Bilder erst nach Versterben + WM</option>
+          <option value="bilder_nach_versterben_unklar">noch lebend – Bilder erst nach Versterben + WM unklar</option>
         </optgroup>
-
-        <optgroup label="Lebendbilder / Palliativ">
-          <option value="lb_kritisch">Lebendbilder – Zustand sehr kritisch</option>
-          <option value="lb_ueberleben_nicht_moeglich">Lebendbilder – Überleben nicht möglich</option>
-          <option value="lb_massnahmen_enden">Lebendbilder – Maßnahmen sollen beendet werden</option>
-          <option value="lb_palliativmassnahmen">Lebendbilder – nur palliative Maßnahmen</option>
-          <option value="palliativ_noch_lebend">Palliative Geburt – noch lebend</option>
-        </optgroup>
-
         <optgroup label="Einleitung / Kaiserschnitt">
-          <option value="el_geplant">Einleitung – geplant</option>
-          <option value="el_begonnen">Einleitung – begonnen</option>
-          <option value="el_begonnen_wehen">Einleitung – begonnen + Wehen</option>
-          <option value="ks_geplant">Kaiserschnitt – geplant</option>
-          <option value="ks_stattgefunden">Kaiserschnitt – stattgefunden</option>
+          <option value="einleitung_begonnen">Einleitung begonnen + Wehen</option>
+          <option value="einleitung_geplant">Einleitung geplant + WM nach Geburt</option>
+          <option value="ks_geplant_heute">KS geplant heute Vormittag</option>
+          <option value="ks_stattgefunden_gestern">KS stattgefunden gestern Abend</option>
         </optgroup>
-
-        <optgroup label="Zwillinge">
-          <option value="zw_beide_verstorben">Zwillinge – beide verstorben</option>
-          <option value="zw_ein_verstorben_ein_lebt">Zwillinge – ein verstorben, ein lebt</option>
-          <option value="zw_ein_verstorben_prognose">Zwillinge – ein verstorben, Prognose schlecht</option>
-          <option value="zw_kritisch_ein_kind">Zwillinge – kritischer Zustand eines Kindes</option>
-          <option value="zw_kritisch_beide">Zwillinge – kritischer Zustand beider Kinder</option>
+        <optgroup label="Mehrlinge">
+          <option value="zwillinge_ein_verstorben">Zwillinge – ein Kind verstorben, ein Kind lebt</option>
+          <option value="zwillinge_beide_verstorben">Zwillinge – beide verstorben + WM plural</option>
+          <option value="drillinge_zwei_verstorben">Drillinge – zwei verstorben, ein lebt</option>
         </optgroup>
-
-        <optgroup label="Drillinge">
-          <option value="dr_drei_verstorben">Drillinge – drei verstorben</option>
-          <option value="dr_ein_verstorben_zwei_leben">Drillinge – ein verstorben, zwei leben</option>
-          <option value="dr_zwei_verstorben_ein_lebt">Drillinge – zwei verstorben, ein lebt</option>
-          <option value="dr_kritisch_ein_kind">Drillinge – kritischer Zustand eines Kindes</option>
-          <option value="dr_kritisch_zwei">Drillinge – kritischer Zustand zweier Kinder</option>
-          <option value="dr_kritisch_alle">Drillinge – kritischer Zustand aller Kinder</option>
+        <optgroup label="Medizin / Kommunikation">
+          <option value="infekte_ja_freitext">Infekte Ja + Freitext</option>
+          <option value="besonderheiten_ja">Äußerliche Besonderheiten Ja</option>
+          <option value="kommunikation_englisch">Kommunikation Englisch</option>
+          <option value="kein_deutsch">Kein Deutsch</option>
         </optgroup>
-
-        <optgroup label="Bilder / Familie">
-          <option value="bilder_eltern_ja_geschwister_ja">Bilder – Eltern + Geschwister dabei</option>
-          <option value="bilder_eltern_nein">Bilder – Eltern nicht dabei</option>
-          <option value="bilder_eltern_unklar">Bilder – Eltern unklar</option>
-          <option value="bilder_nur_heute">Bilder – nur heute möglich</option>
-          <option value="bilder_naechste_tage">Bilder – nächste Tage möglich</option>
-        </optgroup>
-
-        <optgroup label="Kleidung / Deckchen">
-          <option value="kleidung_alles_vorhanden">Kleidung – alles vorhanden</option>
-          <option value="kleidung_nichts_vorhanden">Kleidung – nichts vorhanden</option>
-          <option value="kleidung_unklar">Kleidung – unklar</option>
-          <option value="erinnerung_ja">Erinnerungsstücke – ja</option>
-          <option value="erinnerung_unklar">Erinnerungsstücke – unklar</option>
-        </optgroup>
-
-        <optgroup label="Kommunikation">
-          <option value="komm_englisch">Kommunikation – Englisch möglich</option>
-          <option value="komm_kein_deutsch">Kommunikation – kein Deutsch</option>
-          <option value="komm_wenig_deutsch">Kommunikation – wenig Deutsch</option>
-          <option value="komm_schwierig">Kommunikation – schwierig</option>
-          <option value="komm_uebersetzung">Kommunikation – Übersetzungsprogramm</option>
-        </optgroup>
-
-        <optgroup label="Medizin / Infekte">
-          <option value="med_besonderheiten_einzeln">Besonderheiten – Hydrocephalus</option>
-          <option value="med_besonderheiten_mehrere">Besonderheiten – mehrere</option>
-          <option value="infekt_nein">Infekte – Nein</option>
-          <option value="infekt_unklar">Infekte – Unklar</option>
-          <option value="infekt_ja_checkbox">Infekte – Ja + Checkbox</option>
-          <option value="infekt_ja_freitext">Infekte – Ja + Freitext</option>
-          <option value="infekt_ja_beides">Infekte – Ja + Checkbox + Freitext</option>
-          <option value="infekt_fehler_leer">Infekte – Fehlerfall leer</option>
-        </optgroup>
-
-        <optgroup label="Abschlussfrage">
-          <option value="abschluss_sofort_los">Abschluss – Wer kann sofort los?</option>
-          <option value="abschluss_uebernehmen">Abschluss – Wer kann übernehmen?</option>
-          <option value="abschluss_bereithalten">Abschluss – Wer kann sich bereithalten?</option>
-          <option value="abschluss_ohne_anruf">Abschluss – ohne Anrufsatz</option>
+        <optgroup label="Familie / Bilder / Kleidung">
+          <option value="familie_geschwister">Eltern + Geschwister bei Bildern</option>
+          <option value="kleidung_deckchen_erinnerung">Kleidung/Deckchen/Erinnerungsstücke</option>
         </optgroup>
       </select>
     </div>
-    <button class="btn-next" type="button" onclick="loadFrontendTestCase()">Testfall laden</button>
+    <button type="button" onclick="loadFrontendTestCase()">Testfall laden</button>
+    <button class="btn-secondary" type="button" onclick="frontendResetForm()">Testformular leeren</button>
   </div>
-  <div class="frontend-test-preview">
-    <div class="report">
-      <h2>Testbericht</h2>
-      <div class="reportbox" id="reportTop">Berichtsausgabe</div>
+
+  <div class="frontend-test-custom">
+    <div class="field-wrap">
+      <label class="field-label" for="customSituation">Eigene Variante: Situation</label>
+      <select id="customSituation">
+        <option value=""></option>
+        <option value="verstorben">verstorben</option>
+        <option value="noch lebend">noch lebend</option>
+        <option value="Lebendbilder">Lebendbilder</option>
+        <option value="noch lebend – Bilder erst nach Versterben">noch lebend – Bilder erst nach Versterben</option>
+        <option value="Einleitung">Einleitung</option>
+        <option value="Kaiserschnitt">Kaiserschnitt</option>
+      </select>
+    </div>
+    <div class="field-wrap">
+      <label class="field-label" for="customAlter">Aktuelles Alter</label>
+      <input id="customAlter" placeholder="z. B. 1 ta / 24 woch"/>
+    </div>
+    <div class="field-wrap">
+      <label class="field-label" for="customWasser">Wassermethode</label>
+      <select id="customWasser">
+        <option value=""></option>
+        <option value="Ja">Ja</option>
+        <option value="Nein">Nein</option>
+        <option value="Unklar">Unklar</option>
+        <option value="Nach Geburt">Nach Geburt</option>
+        <option value="Nach Geburt unklar">Nach Geburt unklar</option>
+        <option value="Nach Versterben">Nach Versterben</option>
+        <option value="Nach Versterben unklar">Nach Versterben unklar</option>
+      </select>
+    </div>
+    <div class="field-wrap wide">
+      <label class="field-label" for="customInfo">Eigene Zusatzinfo</label>
+      <input id="customInfo" placeholder="Freitext für Sternenkind / Situation"/>
     </div>
   </div>
-  <div class="lf-hint">Nur Testoberfläche. Das Originalformular darunter bleibt erhalten.</div>
+  <div class="nav" style="margin-top:10px">
+    <button type="button" onclick="loadFrontendCustomVariant()">Eigene Variante laden</button>
+  </div>
+  <div class="frontend-test-note">Ja: Eigene Varianten sind möglich. Die Felder oben füllen das Formular automatisch vor; danach kannst du unten weiter manuell ändern.</div>
 </section>
 
-
+<h1>Leitfaden</h1>
+<p></p>
 <section class="step open" data-title="Einverständnis">
 <h2>Einverständnis vorhanden? *</h2>
 <label class="option"><input id="consent_yes" name="consent" type="radio" value="ja"/><span>Die Eltern sind mit den Bildern einverstanden.</span></label>
@@ -651,19 +804,36 @@ body.admin-mode #abschlussfrageWrapField select{
 </section>
 <section class="step" data-title="Sternenkind">
 <h2>Angaben zum Sternenkind</h2>
-<div class="grid3"><div class="field-wrap" id="elternWrapField"><label class="field-label" for="eltern">Namen der Eltern</label><input id="eltern" placeholder="Namen der Eltern"/></div><div class="field-wrap" id="kindNameWrapField"><label class="field-label" for="kindName">Vorname des Kindes / der Kinder (optional)</label><input id="kindName" placeholder="Vorname des Kindes / der Kinder (optional)"/></div><div class="field-wrap" id="geschlechtWrapField"><label class="field-label" for="geschlecht">Geschlecht des Kindes</label><select id="geschlecht"><option value=""></option><optgroup label="Einling"><option value="Mädchen">Mädchen</option><option value="Junge">Junge</option><option value="Unbekannt">Unbekannt</option></optgroup><optgroup label="Zwillinge"><option value="MM">Zwillinge (MM)</option><option value="JJ">Zwillinge (JJ)</option><option value="MJ">Zwillinge (MJ)</option><option value="JM">Zwillinge (JM)</option><option value="Unbekannt">Zwillinge (unbekannt)</option></optgroup><optgroup label="Drillinge"><option value="MMM">Drillinge (MMM)</option><option value="JJJ">Drillinge (JJJ)</option><option value="MMJ">Drillinge (MMJ)</option><option value="MJM">Drillinge (MJM)</option><option value="JMM">Drillinge (JMM)</option><option value="JJM">Drillinge (JJM)</option><option value="JMJ">Drillinge (JMJ)</option><option value="MJJ">Drillinge (MJJ)</option><option value="Unbekannt">Drillinge (unbekannt)</option></optgroup></select></div><div class="field-wrap" id="aktuelleSituationWrapField"><label class="field-label" for="aktuelleSituation">Aktuelle Situation des Kindes</label><select id="aktuelleSituation"><option value=""></option><option value="verstorben">verstorben</option><option value="noch lebend">noch lebend</option><option value="Lebendbilder">Lebendbilder</option><option value="Einleitung">Einleitung</option><option value="Kaiserschnitt">Kaiserschnitt</option></select></div><div class="field-wrap" id="palliativeGeburtWrapField"><label class="option"><input id="palliativeGeburt" type="checkbox" value="Palliative Geburt"/><span>Palliative Geburt</span></label></div><div class="field-wrap" id="alterKindWrapField"><label class="field-label" for="alterKind">Geburtsalter</label><input id="alterKind" inputmode="numeric" maxlength="2" placeholder=""/></div><div class="field-wrap" id="alterEinheitWrapField"><label class="field-label" for="alterEinheit">Einheit des Alters</label><select id="alterEinheit">
+<div class="grid3"><div class="field-wrap" id="elternWrapField"><label class="field-label" for="eltern">Namen der Eltern</label><input id="eltern" placeholder="Namen der Eltern"/></div><div class="field-wrap" id="kindNameWrapField"><label class="field-label" for="kindName">Vorname des Kindes / der Kinder (optional)</label><input id="kindName" placeholder="Vorname des Kindes / der Kinder (optional)"/></div><div class="field-wrap" id="geschlechtWrapField"><label class="field-label" for="geschlecht">Geschlecht des Kindes</label><select id="geschlecht"><option value=""></option><optgroup label="Einling"><option value="Mädchen">Mädchen</option><option value="Junge">Junge</option><option value="Unbekannt">Unbekannt</option></optgroup><optgroup label="Zwillinge"><option value="MM">Zwillinge (MM)</option><option value="JJ">Zwillinge (JJ)</option><option value="MJ">Zwillinge (MJ)</option><option value="JM">Zwillinge (JM)</option><option value="Unbekannt">Zwillinge (unbekannt)</option></optgroup><optgroup label="Drillinge"><option value="MMM">Drillinge (MMM)</option><option value="JJJ">Drillinge (JJJ)</option><option value="MMJ">Drillinge (MMJ)</option><option value="MJM">Drillinge (MJM)</option><option value="JMM">Drillinge (JMM)</option><option value="JJM">Drillinge (JJM)</option><option value="JMJ">Drillinge (JMJ)</option><option value="MJJ">Drillinge (MJJ)</option><option value="Unbekannt">Drillinge (unbekannt)</option></optgroup></select></div><div class="field-wrap" id="aktuelleSituationWrapField"><label class="field-label" for="aktuelleSituation">Aktuelle Situation des Kindes</label><select id="aktuelleSituation">
+<option value=""></option>
+<option value="verstorben">verstorben</option>
+<option value="noch lebend">noch lebend</option>
+<option value="Lebendbilder">Lebendbilder</option>
+<option value="noch lebend – Bilder erst nach Versterben">noch lebend – Bilder erst nach Versterben</option>
+<option value="Einleitung">Einleitung</option>
+<option value="Kaiserschnitt">Kaiserschnitt</option>
+</select></div><div class="field-wrap" id="palliativeGeburtWrapField"><label class="option"><input id="palliativeGeburt" type="checkbox" value="Palliative Geburt"/><span>Palliative Geburt</span></label></div><div class="field-wrap" id="alterKindWrapField"><label class="field-label" for="alterKind">Geburtsalter</label><input id="alterKind" inputmode="numeric" maxlength="2" placeholder=""/></div><div class="field-wrap" id="alterEinheitWrapField"><label class="field-label" for="alterEinheit">Einheit des Alters</label><select id="alterEinheit">
 <option value=""></option>
 <option>SSW</option>
 <option>Monat(e)</option>
 <option>Jahr(e)</option>
-</select></div></div><div id="sternenkindGrundBlock"><div class="field-wrap" id="grundWrapField"><label class="field-label" for="grund">Grund (DSK-Liste)</label><select id="grund"><option value=""></option></select></div></div><div id="sternenkindDynamicGrid"><div class="field-wrap hidden" id="mehrlingeWrapField"><label class="field-label" for="mehrlinge">Zwillinge / Drillinge</label><select id="mehrlinge"><option value=""></option><optgroup label="Zwillinge"><option value="Zwillinge – beide Kinder verstorben">beide Kinder verstorben</option><option value="Zwillinge – ein Kind verstorben, ein Kind lebt">ein Kind verstorben, ein Kind lebt</option><option value="Zwillinge – ein Kind verstorben, ein Kind lebt, Prognose sehr schlecht">ein Kind verstorben, ein Kind lebt, Prognose sehr schlecht</option><option value="Zwillinge – kritischer Zustand eines Kindes">kritischer Zustand eines Kindes</option><option value="Zwillinge – kritischer Zustand beider Kinder">kritischer Zustand beider Kinder</option></optgroup><optgroup label="Drillinge"><option value="Drillinge – drei Kinder verstorben">drei Kinder verstorben</option><option value="Drillinge – ein Kind verstorben, zwei Kinder leben">ein Kind verstorben, zwei Kinder leben</option><option value="Drillinge – zwei Kinder verstorben, ein Kind lebt">zwei Kinder verstorben, ein Kind lebt</option><option value="Drillinge – kritischer Zustand eines Kindes">kritischer Zustand eines Kindes</option><option value="Drillinge – kritischer Zustand zweier Kinder">kritischer Zustand zweier Kinder</option><option value="Drillinge – kritischer Zustand aller Kinder">kritischer Zustand aller Kinder</option></optgroup></select></div><div class="field-wrap hidden" id="lebendbilderPrognoseWrapField"><label class="field-label" for="lebendbilderPrognose">Lebendbilder – Prognose / Situation</label><select id="lebendbilderPrognose"><option value=""></option><option value="Zustand sehr kritisch">Zustand sehr kritisch</option><option value="Überleben nach Einschätzung nicht möglich">Überleben nach Einschätzung nicht möglich</option><option value="Lebenserhaltende Maßnahmen sollen beendet werden">Lebenserhaltende Maßnahmen sollen beendet werden</option><option value="Nur noch palliative Maßnahmen">Nur noch palliative Maßnahmen</option></select></div><div class="field-wrap hidden" id="aktuellesAlterWrapField"><label class="field-label" for="aktuellesAlter">Aktuelles Alter</label><input id="aktuellesAlter" placeholder=""/></div><div class="field-wrap hidden" id="ksElDetailWrapField"><label class="field-label" for="ksElDetail">Details</label><select class="" id="ksElDetail">
+</select></div><div class="field-wrap" id="grundWrapField"><label class="field-label" for="grund">Grund (DSK-Liste)</label><select id="grund"><option value=""></option></select></div></div><div class="field-wrap" id="sternenkindErgaenzungWrapField" style="margin-top:15px"><label class="field-label" for="sternenkindErgaenzung">Weitere Informationen hier eintragen</label><input id="sternenkindErgaenzung" placeholder=""/></div><div id="sternenkindDynamicGrid"><div class="field-wrap hidden" id="mehrlingeWrapField"><label class="field-label" for="mehrlinge">Zwillinge / Drillinge</label><select id="mehrlinge"><option value=""></option><optgroup label="Zwillinge"><option value="Zwillinge – beide Kinder verstorben">beide Kinder verstorben</option><option value="Zwillinge – ein Kind verstorben, ein Kind lebt">ein Kind verstorben, ein Kind lebt</option><option value="Zwillinge – ein Kind verstorben, ein Kind lebt, Prognose sehr schlecht">ein Kind verstorben, ein Kind lebt, Prognose sehr schlecht</option><option value="Zwillinge – kritischer Zustand eines Kindes">kritischer Zustand eines Kindes</option><option value="Zwillinge – kritischer Zustand beider Kinder">kritischer Zustand beider Kinder</option></optgroup><optgroup label="Drillinge"><option value="Drillinge – drei Kinder verstorben">drei Kinder verstorben</option><option value="Drillinge – ein Kind verstorben, zwei Kinder leben">ein Kind verstorben, zwei Kinder leben</option><option value="Drillinge – zwei Kinder verstorben, ein Kind lebt">zwei Kinder verstorben, ein Kind lebt</option><option value="Drillinge – kritischer Zustand eines Kindes">kritischer Zustand eines Kindes</option><option value="Drillinge – kritischer Zustand zweier Kinder">kritischer Zustand zweier Kinder</option><option value="Drillinge – kritischer Zustand aller Kinder">kritischer Zustand aller Kinder</option></optgroup></select></div><div class="field-wrap hidden" id="lebendbilderPrognoseWrapField"><label class="field-label" for="lebendbilderPrognose">Lebendbilder – Prognose / Situation</label><select id="lebendbilderPrognose"><option value=""></option><option value="Zustand sehr kritisch">Zustand sehr kritisch</option><option value="Überleben nach Einschätzung nicht möglich">Überleben nach Einschätzung nicht möglich</option><option value="Lebenserhaltende Maßnahmen sollen beendet werden">Lebenserhaltende Maßnahmen sollen beendet werden</option><option value="Nur noch palliative Maßnahmen">Nur noch palliative Maßnahmen</option></select></div><div class="field-wrap hidden" id="aktuellesAlterWrapField"><label class="field-label" for="aktuellesAlter">Aktuelles Alter</label><input id="aktuellesAlter" placeholder=""/></div><div class="field-wrap hidden" id="ksElDetailWrapField"><label class="field-label" for="ksElDetail">Details</label><select class="" id="ksElDetail">
 <option value=""></option>
 </select></div><div class="field-wrap hidden" id="ksElZeitWrapField"><label class="field-label" for="ksElZeit">Seit wann / ab wann?</label><input id="ksElZeit" placeholder=""/><div class="lf-hint hidden" id="ksElZeitHinweis"></div></div><div class="field-wrap hidden" id="einleitungZusatzWrapField">
 <label class="field-label">Zusatzinfos Einleitung</label>
 <label class="option" id="einleitungWehenWrapField"><input id="einleitungWehen" type="checkbox" value="Es haben bereits Wehen eingesetzt."/><span>Es haben bereits Wehen eingesetzt.</span></label>
 <label class="option" id="geburtNichtAbsehbarWrapField"><input id="geburtNichtAbsehbar" type="checkbox" value="Wann die Geburt stattfinden wird, ist aktuell noch nicht absehbar."/><span>Wann die Geburt stattfinden wird, ist aktuell noch nicht absehbar.</span></label>
 </div><div id="wasserWrap">
-<div class="field-wrap" id="wasserWrapField"><label class="field-label" for="wasser">Wassermethode</label><select id="wasser"><option value=""></option><option value="Ja">Ja</option><option value="Nein">Nein</option><option value="Unklar">Unklar</option><option value="Nach Geburt">Nach Geburt</option><option value="Nach Geburt unklar">Nach Geburt unklar</option></select><div class="lf-hint" id="wasserMethodeHinweise">
+<div class="field-wrap" id="wasserWrapField"><label class="field-label" for="wasser">Wassermethode</label><select id="wasser">
+<option value=""></option>
+<option value="Ja">Ja</option>
+<option value="Nein">Nein</option>
+<option value="Unklar">Unklar</option>
+<option value="Nach Geburt">Nach Geburt</option>
+<option value="Nach Geburt unklar">Nach Geburt unklar</option>
+<option value="Nach Versterben">Nach Versterben</option>
+<option value="Nach Versterben unklar">Nach Versterben unklar</option>
+</select><div id="wasserErgaenzungWrapField" class="hidden wasser-zusatz-direkt"><label class="field-label" for="wasserErgaenzung">Weitere Informationen zur Wassermethode</label><input id="wasserErgaenzung" placeholder=""/></div><div class="lf-hint" id="wasserMethodeHinweise">
 <p><strong>Anwendung Wassermethode</strong><br/>
 Ein Gefäß mit kühlem Leitungswasser befüllen.<br/>
 Das Kind hineinlegen und kühl stellen.<br/>
@@ -672,7 +842,7 @@ Die Wassermethode kann helfen, die Haut zu stabilisieren.</p>
 <p><strong>Hinweis:</strong> In den Unikliniken Freiburg, Bonn, Münster, dem AKH Wien sowie dem Uniklinikum Linz bitte nicht nach der Wassermethode fragen.</p>
 </div></div>
 </div></div>
-<div class="field-wrap" id="sternenkindErgaenzungWrapField" style="margin-top:15px"><label class="field-label" for="sternenkindErgaenzung">Weitere Informationen hier eintragen</label><input id="sternenkindErgaenzung" placeholder=""/></div><div class="nav"><button class="btn-prev" onclick="prevStep()">Zurück</button><button class="btn-next" onclick="nextStep()">Weiter</button></div>
+<div class="nav"><button class="btn-prev" onclick="prevStep()">Zurück</button><button class="btn-next" onclick="nextStep()">Weiter</button></div>
 </section>
 <section class="step" data-title="Eltern/Familie">
 <h2>Eltern und Familie</h2>
@@ -718,9 +888,13 @@ Die Wassermethode kann helfen, die Haut zu stabilisieren.</p>
 <div>
 <div class="field-wrap" id="besonderheitStatusWrapField"><label class="field-label" for="besonderheitStatus">Sind äußerliche Besonderheiten vorhanden?</label><select id="besonderheitStatus"><option value=""></option><option value="Nein">Nein</option><option value="Ja">Ja</option><option value="Unklar">Unklar</option></select></div>
 <div class="hidden" id="besonderheitenListe"><div class="block-title">Äußerliche Besonderheiten</div><label class="option"><input class="besonderheitCheck" type="checkbox" value="Allgemeine äußerliche Fehlbildungen"/><span>Allgemeine äußerliche Fehlbildungen</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Anenzephalie"/><span>Anenzephalie</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Hautablösungen erwartet"/><span>Hautablösungen erwartet</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Hydrocephalus"/><span>Hydrocephalus</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Hydrops fetalis"/><span>Hydrops fetalis</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Innere Fehlbildungen"/><span>Innere Fehlbildungen</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Klumpfüßchen"/><span>Klumpfüßchen</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Lippen-Kiefer-Gaumenspalte"/><span>Lippen-Kiefer-Gaumenspalte</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Omphalozele"/><span>Omphalozele</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Spina bifida"/><span>Spina bifida</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Turner-Syndrom"/><span>Turner-Syndrom</span></label><label class="option"><input class="besonderheitCheck" type="checkbox" value="Verkürzte Gliedmaßen"/><span>Verkürzte Gliedmaßen</span></label></div>
+<div class="field-wrap hidden" id="besonderheitErgaenzungWrapField" style="margin-top:10px">
+<label class="field-label" for="besonderheitErgaenzung">Weitere Informationen zu Besonderheiten</label>
+<input id="besonderheitErgaenzung" placeholder=""/>
 </div>
 </div>
-<div class="field-wrap" id="medizinErgaenzungWrapField" style="margin-top:15px"><label class="field-label" for="medizinErgaenzung">Weitere Informationen zu äußerlichen Besonderheiten / Medizin</label><input id="medizinErgaenzung" placeholder=""/><div class="lf-hint">Wenn Infekte oder äußerliche Besonderheiten oben nicht aufgeführt sind, bitte hier ergänzen.</div></div><div class="nav"><button class="btn-prev" onclick="prevStep()">Zurück</button><button class="btn-next" onclick="nextStep()">Weiter</button></div>
+</div>
+<div class="nav"><button class="btn-prev" onclick="prevStep()">Zurück</button><button class="btn-next" onclick="nextStep()">Weiter</button></div>
 </section>
 <section class="step" data-title="Kommunikation">
 <h2>Kommunikation</h2>
@@ -757,6 +931,7 @@ Die Wassermethode kann helfen, die Haut zu stabilisieren.</p>
 <div class="reportbox" id="report">Berichtsausgabe</div>
 <div class="copy-row">
   <button class="btn-copy" id="copyReportBtn" type="button" onclick="copyReport()">Bericht kopieren</button>
+  <button class="btn-reset" id="resetInputsBtn" type="button" onclick="resetInputsAfterCopy()" disabled>Eingaben zurücksetzen</button>
   <span class="copy-status" id="copyStatus"></span>
 </div>
 </div>
@@ -784,10 +959,61 @@ function adminRevealDynamicFields(){
     el.hidden = false;
     el.style.display = "";
   });
+}
 
-  document.querySelectorAll("input, select, textarea").forEach(el => {
-    el.disabled = false;
-  });
+/* FIX18: Admin darf Felder sichtbar machen, aber Fachlogik nicht aufheben. */
+function enforceAdminLogicGuards(){
+  if(!isAdminMode()) return;
+
+  const geschwister = $("geschwisterDabei");
+  const geschwisterWrap = $("geschwisterDabeiWrapField") || geschwister;
+  const hand = val("kinderHand");
+  const eltern = val("elternDabei");
+  const hatGeschwister =
+    hand === "1 Kind an der Hand" ||
+    hand === "2 Kinder an der Hand" ||
+    hand === "3 Kinder an der Hand" ||
+    hand === "4 Kinder an der Hand";
+  const geschwisterErlaubt = eltern === "Ja" && hatGeschwister;
+
+  if(geschwister){
+    if(!geschwisterErlaubt) geschwister.value = "";
+    geschwister.disabled = !geschwisterErlaubt;
+  }
+  if(geschwisterWrap) geschwisterWrap.classList.remove("hidden");
+
+  const wasser = $("wasser");
+  const wasserWrap = $("wasserWrapField") || $("wasserWrap");
+  const wasserErlaubt =
+    !$("palliativeGeburt")?.checked &&
+    val("aktuelleSituation") !== "Lebendbilder" &&
+    val("aktuelleSituation") !== "noch lebend";
+
+  if(wasser){
+    if(!wasserErlaubt) wasser.value = "";
+    wasser.disabled = !wasserErlaubt;
+  }
+  if(wasserWrap) wasserWrap.classList.remove("hidden");
+
+  const prognose = $("lebendbilderPrognose");
+  const prognoseWrap = $("lebendbilderPrognoseWrapField") || prognose;
+  const prognoseErlaubt = LebendbilderEligibilityController.allowsLebendbilderFields();
+
+  if(prognose){
+    if(!prognoseErlaubt) prognose.value = "";
+    prognose.disabled = !prognoseErlaubt;
+  }
+  if(prognoseWrap) prognoseWrap.classList.remove("hidden");
+
+  const aktuellesAlter = $("aktuellesAlter");
+  const aktuellesAlterWrap = $("aktuellesAlterWrapField") || aktuellesAlter;
+  const aktuellesAlterErlaubt = LebendbilderEligibilityController.allowsAktuellesAlter();
+
+  if(aktuellesAlter){
+    if(!aktuellesAlterErlaubt) aktuellesAlter.value = "";
+    aktuellesAlter.disabled = !aktuellesAlterErlaubt;
+  }
+  if(aktuellesAlterWrap) aktuellesAlterWrap.classList.remove("hidden");
 }
 
 function toggleAdminMode(){
@@ -819,6 +1045,13 @@ document.addEventListener("click", event => {
     step.classList.toggle("open");
     step.classList.toggle("todo", !step.classList.contains("open"));
     return;
+  }
+
+  if(step !== consentStep && step !== reportStep && workSteps.includes(step)){
+    const keepScrollY = window.scrollY;
+    currentWorkIndex = workSteps.indexOf(step);
+    recalcAll();
+    window.scrollTo({ top: keepScrollY, behavior: "auto" });
   }
 }, true);
 
@@ -934,6 +1167,7 @@ const IB_CONTROLLER = {
       if($("schutzkleidungWrapField")) $("schutzkleidungWrapField").classList.remove("hidden");
       if($("infektErgaenzungWrapField")) $("infektErgaenzungWrapField").classList.remove("hidden");
       if($("besonderheitenListe")) $("besonderheitenListe").classList.remove("hidden");
+      if($("besonderheitErgaenzungWrapField")) $("besonderheitErgaenzungWrapField").classList.remove("hidden");
       return;
     }
 
@@ -953,6 +1187,10 @@ const IB_CONTROLLER = {
       $("besonderheitenListe").classList.toggle("hidden", !besonderheitenJa);
     }
 
+    if($("besonderheitErgaenzungWrapField")){
+      $("besonderheitErgaenzungWrapField").classList.toggle("hidden", !besonderheitenJa);
+    }
+
     if(!infektJa){
       document.querySelectorAll(".infektCheck").forEach(cb => cb.checked = false);
       if($("schutzkleidung")) $("schutzkleidung").value = "";
@@ -961,6 +1199,7 @@ const IB_CONTROLLER = {
 
     if(!besonderheitenJa){
       document.querySelectorAll(".besonderheitCheck").forEach(cb => cb.checked = false);
+      if($("besonderheitErgaenzung")) $("besonderheitErgaenzung").value = "";
     }
   },
 
@@ -1077,10 +1316,6 @@ function updateConsentFlow(){
   }
 
   recalcAll();
-
-  if(consent === "ja" && workSteps[0]){
-    workSteps[0].scrollIntoView({behavior:"smooth", block:"start"});
-  }
 }
 
 
@@ -1109,6 +1344,12 @@ function validateCurrentStep(){
   return true;
 }
 
+function scrollToFormOverview(){
+  const wrap = document.querySelector(".wrap");
+  const y = wrap ? wrap.getBoundingClientRect().top + window.pageYOffset - 20 : 0;
+  window.scrollTo({ top: Math.max(0, y), behavior: "auto" });
+}
+
 function nextStep(){
   if(!isAdminMode() && consentValue() !== "ja") return;
 
@@ -1122,9 +1363,8 @@ function nextStep(){
 
   recalcAll();
 
-  if(workSteps[currentWorkIndex]){
-    workSteps[currentWorkIndex].scrollIntoView({behavior:"smooth", block:"start"});
-  }
+  scrollToFormOverview();
+  
 }
 
 function prevStep(){
@@ -1136,9 +1376,8 @@ function prevStep(){
 
   recalcAll();
 
-  if(workSteps[currentWorkIndex]){
-    workSteps[currentWorkIndex].scrollIntoView({behavior:"smooth", block:"start"});
-  }
+  scrollToFormOverview();
+  
 }
 
 function syncKinderHand(){
@@ -1463,6 +1702,7 @@ const LebendbilderEligibilityController = {
 
   allowsAktuellesAlter(){
     if(val("aktuelleSituation") === "noch lebend") return true;
+    if(val("aktuelleSituation") === "noch lebend – Bilder erst nach Versterben") return true;
     return this.allowsLebendbilderFields();
   }
 };
@@ -1476,6 +1716,7 @@ const PALLIATIVE_GEBURT_MODEL = Object.freeze({
     { value:"verstorben", label:"verstorben" },
     { value:"noch lebend", label:"noch lebend" },
     { value:"Lebendbilder", label:"Lebendbilder" },
+    { value:"noch lebend – Bilder erst nach Versterben", label:"noch lebend – Bilder erst nach Versterben" },
     { value:"Einleitung", label:"Einleitung" },
     { value:"Kaiserschnitt", label:"Kaiserschnitt" }
   ]),
@@ -1572,23 +1813,45 @@ function updateAktuellesAlterVisibility(){
 }
 
 function setWasserOptions(mode){
-  const wasser = $("wasser");
-  if(!wasser) return;
+  const select = $("wasser");
+  if(!select) return;
 
-  const current = wasser.value;
-  const all = ["", "Ja", "Nein", "Unklar"];
-  const nachGeburt = ["", "Nach Geburt", "Nach Geburt unklar"];
-  const options = mode === "nachGeburt" ? nachGeburt : all;
+  const current = select.value;
 
-  wasser.innerHTML = "";
-  options.forEach(value => {
+  const optionsByMode = {
+    all: [
+      ["", ""],
+      ["Ja", "Ja"],
+      ["Nein", "Nein"],
+      ["Unklar", "Unklar"],
+      ["Nach Geburt", "Nach Geburt"],
+      ["Nach Geburt unklar", "Nach Geburt unklar"],
+      ["Nach Versterben", "Nach Versterben"],
+      ["Nach Versterben unklar", "Nach Versterben unklar"]
+    ],
+    nachGeburt: [
+      ["", ""],
+      ["Nach Geburt", "Nach Geburt"],
+      ["Nach Geburt unklar", "Nach Geburt unklar"]
+    ],
+    nachVersterben: [
+      ["", ""],
+      ["Nach Versterben", "Nach Versterben"],
+      ["Nach Versterben unklar", "Nach Versterben unklar"]
+    ]
+  };
+
+  const options = optionsByMode[mode] || optionsByMode.all;
+  select.innerHTML = "";
+
+  options.forEach(([value, label]) => {
     const option = document.createElement("option");
     option.value = value;
-    option.textContent = value;
-    wasser.appendChild(option);
+    option.textContent = label;
+    select.appendChild(option);
   });
 
-  wasser.value = options.includes(current) ? current : "";
+  select.value = options.some(([value]) => value === current) ? current : "";
 }
 
 
@@ -1687,10 +1950,15 @@ function updateWasser(){
 
   const wasserField = $("wasserWrapField") || $("wasserWrap");
 
-  if($("palliativeGeburt")?.checked){
+  const wasserInfo = $("wasserErgaenzungWrapField");
+const wasserInfoField = $("wasserErgaenzung");
+
+if($("palliativeGeburt")?.checked){
     $("wasser").value = "";
     $("wasser").disabled = true;
     if(wasserField) wasserField.classList.add("hidden");
+    if(wasserInfo) wasserInfo.classList.add("hidden");
+    if(wasserInfoField) wasserInfoField.value = "";
     return;
   }
 
@@ -1700,21 +1968,31 @@ function updateWasser(){
     setWasserOptions("all");
     $("wasser").disabled = false;
     if(wasserField) wasserField.classList.remove("hidden");
+    if(wasserInfo) wasserInfo.classList.remove("hidden");
     return;
   }
 
-  if(situation === "verstorben" || (situation === "Kaiserschnitt" && val("ksElDetail") === "Der Kaiserschnitt hat stattgefunden.")){
+  if(situation === "noch lebend – Bilder erst nach Versterben"){
+    setWasserOptions("nachVersterben");
+    $("wasser").disabled = false;
+    if(wasserField) wasserField.classList.remove("hidden");
+    if(wasserInfo) wasserInfo.classList.remove("hidden");
+  }else if(situation === "verstorben" || (situation === "Kaiserschnitt" && val("ksElDetail") === "Der Kaiserschnitt hat stattgefunden.")){
     setWasserOptions("all");
     $("wasser").disabled = false;
     if(wasserField) wasserField.classList.remove("hidden");
+    if(wasserInfo) wasserInfo.classList.remove("hidden");
   }else if(situation === "Einleitung" || (situation === "Kaiserschnitt" && val("ksElDetail") === "Der Kaiserschnitt ist geplant.")){
     setWasserOptions("nachGeburt");
     $("wasser").disabled = false;
     if(wasserField) wasserField.classList.remove("hidden");
+    if(wasserInfo) wasserInfo.classList.remove("hidden");
   }else{
     $("wasser").value = "";
     $("wasser").disabled = true;
     if(wasserField) wasserField.classList.add("hidden");
+    if(wasserInfo) wasserInfo.classList.add("hidden");
+    if(wasserInfoField) wasserInfoField.value = "";
   }
 }
 
@@ -1753,7 +2031,9 @@ function updatePalliativeGeburtOptions(){
     : [
         ["", ""],
         ["verstorben", "verstorben"],
+        ["noch lebend", "noch lebend"],
         ["Lebendbilder", "Lebendbilder"],
+        ["noch lebend – Bilder erst nach Versterben", "noch lebend – Bilder erst nach Versterben"],
         ["Einleitung", "Einleitung"],
         ["Kaiserschnitt", "Kaiserschnitt"]
       ];
@@ -1905,7 +2185,7 @@ function updateAbschlussfragenOptions(){
 
   if(palliative){
     frage = bereithalten;
-  }else if(situation === "verstorben"){
+  }else if(situation === "verstorben" || situation === "noch lebend – Bilder erst nach Versterben"){
     frage = uebernehmen;
   }else if(situation === "Lebendbilder"){
     frage = sofortLos;
@@ -1926,7 +2206,7 @@ function baueAbschlussBlock(){
   const brauchtAnrufHinweis =
     !!frage && (
       palliative ||
-      ["verstorben", "noch lebend", "Einleitung", "Kaiserschnitt"].includes(situation) ||
+      ["verstorben", "noch lebend", "noch lebend – Bilder erst nach Versterben", "Einleitung", "Kaiserschnitt"].includes(situation) ||
       !!$("vorLosfahrtAnrufen")?.checked
     );
 
@@ -1956,7 +2236,7 @@ function clearSituationSpecificValues(){
     $("aktuellesAlter").value = "";
   }
 
-  if(!["verstorben", "Einleitung", "Kaiserschnitt"].includes(situation) && $("wasser")){
+  if(!["verstorben", "noch lebend – Bilder erst nach Versterben", "Einleitung", "Kaiserschnitt"].includes(situation) && $("wasser")){
     $("wasser").value = "";
   }
 
@@ -2395,10 +2675,15 @@ function updateZeitlogikHinweis(){
   }
 
   if(expected === "future" && actual === "past"){
-    zeit.value = "";
-    hinweis.textContent = "Diese Auswahl beschreibt eine Planung. Bitte keine Vergangenheitsangabe eintragen.";
-    hinweis.classList.remove("hidden");
-    return false;
+    const zeitLower = (zeit.value || "").toLocaleLowerCase("de-DE");
+    const erlaubtHeuteGeplant = zeitLower.includes("heute");
+
+    if(!erlaubtHeuteGeplant){
+      zeit.value = "";
+      hinweis.textContent = "Diese Auswahl beschreibt eine Planung. Bitte keine Vergangenheitsangabe eintragen.";
+      hinweis.classList.remove("hidden");
+      return false;
+    }
   }
 
   return true;
@@ -2491,6 +2776,7 @@ async function copyReport(){
   try{
     await navigator.clipboard.writeText(text);
     if($("copyStatus")) $("copyStatus").textContent = "Bericht kopiert.";
+    if($("resetInputsBtn")) $("resetInputsBtn").disabled = false;
   }catch(error){
     const range = document.createRange();
     range.selectNodeContents(report);
@@ -2500,9 +2786,39 @@ async function copyReport(){
     document.execCommand("copy");
     selection.removeAllRanges();
     if($("copyStatus")) $("copyStatus").textContent = "Bericht kopiert.";
+    if($("resetInputsBtn")) $("resetInputsBtn").disabled = false;
   }
 }
 
+
+
+function resetInputsAfterCopy(){
+  if($("resetInputsBtn") && $("resetInputsBtn").disabled) return;
+
+  document.querySelectorAll("input, select, textarea").forEach(el => {
+    if(el.type === "radio" || el.type === "checkbox"){
+      el.checked = false;
+    }else{
+      el.value = "";
+    }
+    el.disabled = false;
+  });
+
+  currentWorkIndex = -1;
+
+  if($("copyStatus")) $("copyStatus").textContent = "";
+  if($("resetInputsBtn")) $("resetInputsBtn").disabled = true;
+
+  recalcAll();
+
+  const wrap = document.querySelector(".wrap");
+  if(wrap){
+    window.scrollTo({
+      top: Math.max(0, wrap.getBoundingClientRect().top + window.pageYOffset - 10),
+      behavior:"auto"
+    });
+  }
+}
 
 function recalcAll(){
   
@@ -2533,16 +2849,13 @@ function recalcAll(){
   // Mehrlingsmatrix nach Reset erneut absichern.
   updateSituationByMehrlingsRegel();
   adminRevealDynamicFields();
+  enforceAdminLogicGuards();
   updateReport();
 
   if($("report")){
     let cleanedReport = ensureInfektFreitextInReportText($("report").innerText || $("report").textContent || "");
     cleanedReport = ensureVorLosfahrtAnrufHinweis(cleanedReport);
     $("report").innerHTML = renderReportHtml(cleanedReport);
-
-    if($("reportTop")){
-      $("reportTop").innerHTML = renderReportHtml(cleanedReport);
-    }
   }
   updateInfektValidation();
   setOpenStates();
@@ -2985,7 +3298,40 @@ function baueWasserSatz(){
     return "Ob die Wassermethode nach der Geburt angewendet werden kann, ist aktuell unklar.";
   }
 
+  if(wasser === "Nach Versterben"){
+    return "Nach dem Versterben wird die Wassermethode angewendet.";
+  }
+
+  if(wasser === "Nach Versterben unklar"){
+    return "Ob die Wassermethode nach dem Versterben angewendet werden kann, ist aktuell unklar.";
+  }
+
   return "";
+}
+
+function baueBilderNachVersterbenSatz(){
+  if(val("aktuelleSituation") !== "noch lebend – Bilder erst nach Versterben") return "";
+
+  const teile = [
+    "Das Kind lebt aktuell noch.",
+    "Die Bilder werden erst nach dem Versterben gewünscht."
+  ];
+
+  if(val("aktuellesAlter")){
+    teile.push("Das Kind ist aktuell " + LBAgeFormatterController.normalize(val("aktuellesAlter"))
+      .replace(/\b1\s+ta\b/iu, "ein Tag")
+      .replace(/\b(2|zwei)\s+ta\b/iu, "zwei Tage")
+      .replace(/\b(3|drei)\s+ta\b/iu, "drei Tage")
+      .replace(/\b(4|vier)\s+ta\b/iu, "vier Tage")
+      .replace(/\b(5|fünf|fuenf)\s+ta\b/iu, "fünf Tage")
+      .replace(/\b(6|sechs)\s+ta\b/iu, "sechs Tage")
+      .replace(/\b(7|sieben)\s+ta\b/iu, "sieben Tage")
+      .replace(/\b(8|acht)\s+ta\b/iu, "acht Tage")
+      .replace(/\b(9|neun)\s+ta\b/iu, "neun Tage")
+      .replace(/\b(10|zehn)\s+ta\b/iu, "zehn Tage") + " alt.");
+  }
+
+  return teile.join("\n");
 }
 
 function baueKsElDetailSatz(){
@@ -2998,7 +3344,13 @@ function baueKsElDetailSatz(){
   const teile = [];
 
   if(expected && actual && actual !== "neutral" && expected !== actual){
-    return "";
+    const zeitLower = (zeitRaw || "").toLocaleLowerCase("de-DE");
+    const erlaubtHeuteGeplant =
+      expected === "future" &&
+      zeitLower.includes("heute");
+    if(!erlaubtHeuteGeplant){
+      return "";
+    }
   }
 
   if(situation === "Einleitung"){
@@ -3033,8 +3385,8 @@ function baueKsElDetailSatz(){
   if(situation === "Kaiserschnitt"){
     if(detail === "Der Kaiserschnitt hat stattgefunden."){
       teile.push(zeit
-        ? "Der Kaiserschnitt hat " + zeit + " stattgefunden."
-        : "Der Kaiserschnitt hat stattgefunden.");
+        ? "Das Kind wurde " + zeit + " per Kaiserschnitt geboren."
+        : "Das Kind wurde per Kaiserschnitt geboren.");
     }else if(detail === "Der Kaiserschnitt ist geplant."){
       if(zeit){
         const zeitLower = zeit.toLocaleLowerCase("de-DE");
@@ -3362,7 +3714,10 @@ const FamilieReportController = {
 
 const WasserReportController = {
   build(){
-    return baueWasserSatz();
+    return [
+      baueWasserSatz(),
+      normalisiereZusatz(val("wasserErgaenzung"))
+    ].map(normalisiereAbsatz).filter(Boolean).join("\n");
   }
 };
 
@@ -3483,6 +3838,7 @@ const SternenkindReportController = {
       baueMehrlingssatz(),
       bauePalliativeGeburtSatz(),
       baueGeburtssituationSatz(),
+      baueBilderNachVersterbenSatz(),
       baueKsElDetailSatz(),
       aktuellesAlterSatz,
       lebendbilderPrognoseSatz(),
@@ -3512,6 +3868,7 @@ const MedizinReportController = {
     const infektStatus = val("infektStatus");
     const besonderheiten = checkedValues("besonderheitCheck");
     const infekte = checkedValues("infektCheck");
+    const besonderheitErgaenzung = normalisiereZusatz(val("besonderheitErgaenzung"));
     const lines = [];
 
     if(besonderheitStatus === "Nein" && infektStatus === "Nein"){
@@ -3522,10 +3879,16 @@ const MedizinReportController = {
       return "Ob Infekte oder äußerliche Besonderheiten vorliegen, ist aktuell nicht bekannt.";
     }
 
-    if(besonderheitStatus === "Ja" && besonderheiten.length){
-      lines.push("Äußerliche Besonderheiten:\n- " + besonderheiten.join("\n- "));
-    }else if(besonderheitStatus === "Ja"){
-      lines.push("Äußerliche Besonderheiten sind vorhanden, die genaue Art ist noch nicht ausgewählt.");
+    if(besonderheitStatus === "Ja"){
+      const besonderheitLines = [];
+      if(besonderheiten.length) besonderheitLines.push("- " + besonderheiten.join("\n- "));
+      if(besonderheitErgaenzung) besonderheitLines.push(besonderheitErgaenzung);
+
+      if(besonderheitLines.length){
+        lines.push("Äußerliche Besonderheiten:\n" + besonderheitLines.join("\n"));
+      }else{
+        lines.push("Äußerliche Besonderheiten sind vorhanden, die genaue Art ist noch nicht ausgewählt.");
+      }
     }else if(besonderheitStatus === "Nein"){
       lines.push("Es sind keine äußerlichen Besonderheiten bekannt.");
     }else if(besonderheitStatus === "Unklar"){
@@ -3542,22 +3905,10 @@ const MedizinReportController = {
       lines.push("Bekannte Infekte:\nOb Infekte vorliegen, ist aktuell nicht bekannt.");
     }
 
-    const medizinZusatz = val("medizinErgaenzung");
-
     if(val("schutzkleidung") === "Ja"){
-      lines.push(
-        medizinZusatz
-          ? "Schutzkleidung ist vorhanden.\n" + normalisiereZusatz(medizinZusatz)
-          : "Schutzkleidung ist vorhanden."
-      );
+      lines.push("Schutzkleidung ist vorhanden.");
     }else if(val("schutzkleidung") === "Unklar"){
-      lines.push(
-        medizinZusatz
-          ? "Ob Schutzkleidung vorhanden ist, ist aktuell nicht bekannt.\n" + normalisiereZusatz(medizinZusatz)
-          : "Ob Schutzkleidung vorhanden ist, ist aktuell nicht bekannt."
-      );
-    }else if(medizinZusatz){
-      lines.push(normalisiereZusatz(medizinZusatz));
+      lines.push("Ob Schutzkleidung vorhanden ist, ist aktuell nicht bekannt.");
     }
 
     return lines.join("\n\n");
@@ -3652,9 +4003,6 @@ const ReportView = {
   render(reportText){
     const target = this.output();
     if(target) target.innerHTML = renderReportHtml(reportText);
-
-    const top = $("reportTop");
-    if(top) top.innerHTML = renderReportHtml(reportText);
   },
 
   renderFallback(){
@@ -3751,355 +4099,6 @@ function ensureVorLosfahrtAnrufHinweis(text){
   }
 
   return output + "\n\n" + notice;
-}
-
-
-/* FRONTEND_TEST_PANEL_V2 */
-function frontendTestSetValue(id, value){
-  const field = $(id);
-  if(field) field.value = value;
-}
-
-function frontendTestSetChecked(id, checked){
-  const field = $(id);
-  if(field) field.checked = !!checked;
-}
-
-function frontendTestClearChecks(className){
-  document.querySelectorAll("." + className).forEach(cb => cb.checked = false);
-}
-
-function frontendTestCheckByValue(className, value){
-  const target = Array.from(document.querySelectorAll("." + className)).find(cb => cb.value === value);
-  if(target) target.checked = true;
-}
-
-function frontendTestCheckRadioByValue(name, value){
-  const target = Array.from(document.querySelectorAll('input[name="' + name + '"]')).find(input => input.value === value);
-  if(target) target.checked = true;
-}
-
-function frontendTestBaseReset(){
-  const consent = $("consent_yes");
-  if(consent) consent.checked = true;
-
-  frontendTestSetValue("mitarbeiter", "Test");
-  frontendTestSetValue("ansprechpartner", "Jenny");
-  frontendTestSetValue("funktion", "Schwester");
-  frontendTestSetValue("gespraech", "lieb");
-
-  frontendTestSetValue("kindName", "");
-  frontendTestSetValue("geschlecht", "");
-  frontendTestSetChecked("palliativeGeburt", false);
-  frontendTestSetValue("aktuelleSituation", "verstorben");
-  frontendTestSetValue("mehrlinge", "");
-  frontendTestSetValue("lebendbilderPrognose", "");
-  frontendTestSetValue("aktuellesAlter", "");
-  frontendTestSetValue("ksElDetail", "");
-  frontendTestSetValue("ksElZeit", "");
-  frontendTestSetChecked("einleitungWehen", false);
-  frontendTestSetChecked("geburtNichtAbsehbar", false);
-  frontendTestSetValue("wasser", "Ja");
-
-  frontendTestSetValue("kindFamilie", "2. Kind");
-  frontendTestSetValue("kinderHand", "1 Kind an der Hand");
-  frontendTestSetValue("familieErgaenzung", "");
-
-  frontendTestSetValue("elternDabei", "Ja");
-  frontendTestSetValue("geschwisterDabei", "");
-  document.querySelectorAll(".bilderZeitfensterCheck").forEach(cb => cb.checked = false);
-
-  frontendTestSetValue("kleidung", "Ja");
-  frontendTestSetValue("deckchen", "Ja");
-  frontendTestSetValue("erinnerung", "Ja");
-
-  frontendTestSetValue("infektStatus", "Nein");
-  frontendTestClearChecks("infektCheck");
-  frontendTestSetValue("infektErgaenzung", "");
-  frontendTestSetValue("schutzkleidung", "");
-
-  frontendTestSetValue("besonderheitStatus", "Nein");
-  frontendTestClearChecks("besonderheitCheck");
-  frontendTestSetValue("medizinErgaenzung", "");
-
-  frontendTestSetValue("kommunikationAktiv", "Ja");
-  frontendTestClearChecks("kommunikationCheck");
-  frontendTestCheckByValue("kommunikationCheck", "Englisch möglich");
-
-  frontendTestSetValue("abschlussfrage", "Wer kann sofort los?");
-  frontendTestSetChecked("vorLosfahrtAnrufen", true);
-
-  currentWorkIndex = 0;
-}
-
-function frontendTestSetTwins(mehrlingsValue){
-  frontendTestSetValue("kindName", "Lina, Mia");
-  recalcAll();
-  frontendTestSetValue("mehrlinge", mehrlingsValue);
-}
-
-function frontendTestSetTriplets(mehrlingsValue){
-  frontendTestSetValue("kindName", "Lina, Mia, Anna");
-  recalcAll();
-  frontendTestSetValue("mehrlinge", mehrlingsValue);
-}
-
-function frontendTestSetLebendbilder(prognose){
-  frontendTestSetValue("aktuelleSituation", "Lebendbilder");
-  recalcAll();
-  frontendTestSetValue("aktuellesAlter", "1 Tag");
-  frontendTestSetValue("lebendbilderPrognose", prognose || "");
-  frontendTestSetValue("wasser", "");
-}
-
-function frontendTestSetEinleitung(detail, zeit, wehen, nichtAbsehbar){
-  frontendTestSetValue("aktuelleSituation", "Einleitung");
-  recalcAll();
-  frontendTestSetValue("ksElDetail", detail);
-  frontendTestSetValue("ksElZeit", zeit);
-  frontendTestSetChecked("einleitungWehen", !!wehen);
-  frontendTestSetChecked("geburtNichtAbsehbar", !!nichtAbsehbar);
-  frontendTestSetValue("wasser", "Nach Geburt");
-}
-
-function frontendTestSetKaiserschnitt(detail, zeit){
-  frontendTestSetValue("aktuelleSituation", "Kaiserschnitt");
-  recalcAll();
-  frontendTestSetValue("ksElDetail", detail);
-  frontendTestSetValue("ksElZeit", zeit);
-  frontendTestSetValue("wasser", "Nach Geburt");
-}
-
-function loadFrontendTestCase(){
-  const key = val("frontendTestCase");
-  if(!key) return;
-
-  frontendTestBaseReset();
-
-  switch(key){
-    case "basis_verstorben_kind1":
-      frontendTestSetValue("kindFamilie", "1. Kind");
-      break;
-    case "basis_verstorben_kind2_keine_hand":
-      frontendTestSetValue("kindFamilie", "2. Kind");
-      recalcAll();
-      frontendTestSetValue("kinderHand", "keine Kinder an der Hand");
-      break;
-    case "basis_verstorben_kind2_ein_hand":
-      frontendTestSetValue("kindFamilie", "2. Kind");
-      recalcAll();
-      frontendTestSetValue("kinderHand", "1 Kind an der Hand");
-      break;
-    case "basis_verstorben_kind3_zwei_hand":
-      frontendTestSetValue("kindFamilie", "3. Kind");
-      recalcAll();
-      frontendTestSetValue("kinderHand", "2 Kinder an der Hand");
-      break;
-
-    case "lb_kritisch":
-      frontendTestSetLebendbilder("Zustand sehr kritisch");
-      break;
-    case "lb_ueberleben_nicht_moeglich":
-      frontendTestSetLebendbilder("Überleben nach Einschätzung nicht möglich");
-      break;
-    case "lb_massnahmen_enden":
-      frontendTestSetLebendbilder("Lebenserhaltende Maßnahmen sollen beendet werden");
-      break;
-    case "lb_palliativmassnahmen":
-      frontendTestSetLebendbilder("Nur noch palliative Maßnahmen");
-      break;
-    case "palliativ_noch_lebend":
-      frontendTestSetChecked("palliativeGeburt", true);
-      recalcAll();
-      frontendTestSetValue("aktuelleSituation", "noch lebend");
-      frontendTestSetValue("aktuellesAlter", "24 Tage");
-      frontendTestSetValue("wasser", "");
-      break;
-
-    case "el_geplant":
-      frontendTestSetEinleitung("Die Einleitung ist geplant.", "morgen", false, false);
-      break;
-    case "el_begonnen":
-      frontendTestSetEinleitung("Die Einleitung hat begonnen.", "heute Morgen", false, false);
-      break;
-    case "el_begonnen_wehen":
-      frontendTestSetEinleitung("Die Einleitung hat begonnen.", "heute Morgen", true, true);
-      break;
-    case "ks_geplant":
-      frontendTestSetKaiserschnitt("Der Kaiserschnitt ist geplant.", "morgen um 9 Uhr");
-      break;
-    case "ks_stattgefunden":
-      frontendTestSetKaiserschnitt("Der Kaiserschnitt hat stattgefunden.", "heute Morgen");
-      break;
-
-    case "zw_beide_verstorben":
-      frontendTestSetTwins("Zwillinge – beide Kinder verstorben");
-      frontendTestSetValue("aktuelleSituation", "verstorben");
-      frontendTestSetValue("kindFamilie", "1. Kind");
-      break;
-    case "zw_ein_verstorben_ein_lebt":
-      frontendTestSetTwins("Zwillinge – ein Kind verstorben, ein Kind lebt");
-      frontendTestSetLebendbilder("");
-      break;
-    case "zw_ein_verstorben_prognose":
-      frontendTestSetTwins("Zwillinge – ein Kind verstorben, ein Kind lebt, Prognose sehr schlecht");
-      frontendTestSetLebendbilder("");
-      break;
-    case "zw_kritisch_ein_kind":
-      frontendTestSetTwins("Zwillinge – kritischer Zustand eines Kindes");
-      frontendTestSetLebendbilder("");
-      break;
-    case "zw_kritisch_beide":
-      frontendTestSetTwins("Zwillinge – kritischer Zustand beider Kinder");
-      frontendTestSetLebendbilder("");
-      break;
-
-    case "dr_drei_verstorben":
-      frontendTestSetTriplets("Drillinge – drei Kinder verstorben");
-      frontendTestSetValue("aktuelleSituation", "verstorben");
-      frontendTestSetValue("kindFamilie", "1. Kind");
-      break;
-    case "dr_ein_verstorben_zwei_leben":
-      frontendTestSetTriplets("Drillinge – ein Kind verstorben, zwei Kinder leben");
-      frontendTestSetLebendbilder("");
-      break;
-    case "dr_zwei_verstorben_ein_lebt":
-      frontendTestSetTriplets("Drillinge – zwei Kinder verstorben, ein Kind lebt");
-      frontendTestSetLebendbilder("");
-      break;
-    case "dr_kritisch_ein_kind":
-      frontendTestSetTriplets("Drillinge – kritischer Zustand eines Kindes");
-      frontendTestSetLebendbilder("");
-      break;
-    case "dr_kritisch_zwei":
-      frontendTestSetTriplets("Drillinge – kritischer Zustand zweier Kinder");
-      frontendTestSetLebendbilder("");
-      break;
-    case "dr_kritisch_alle":
-      frontendTestSetTriplets("Drillinge – kritischer Zustand aller Kinder");
-      frontendTestSetLebendbilder("");
-      break;
-
-    case "bilder_eltern_ja_geschwister_ja":
-      frontendTestSetValue("kindFamilie", "2. Kind");
-      recalcAll();
-      frontendTestSetValue("kinderHand", "1 Kind an der Hand");
-      frontendTestSetValue("elternDabei", "Ja");
-      recalcAll();
-      frontendTestSetValue("geschwisterDabei", "Ja");
-      break;
-    case "bilder_eltern_nein":
-      frontendTestSetValue("elternDabei", "Nein");
-      break;
-    case "bilder_eltern_unklar":
-      frontendTestSetValue("elternDabei", "Unklar");
-      break;
-    case "bilder_nur_heute":
-      frontendTestCheckRadioByValue("bilderZeitfenster", "Bilder nur heute möglich.");
-      break;
-    case "bilder_naechste_tage":
-      frontendTestCheckRadioByValue("bilderZeitfenster", "Bilder auch in den nächsten Tagen möglich.");
-      break;
-
-    case "kleidung_alles_vorhanden":
-      frontendTestSetValue("kleidung", "Ja");
-      frontendTestSetValue("deckchen", "Ja");
-      break;
-    case "kleidung_nichts_vorhanden":
-      frontendTestSetValue("kleidung", "Nein");
-      frontendTestSetValue("deckchen", "Nein");
-      break;
-    case "kleidung_unklar":
-      frontendTestSetValue("kleidung", "Unklar");
-      frontendTestSetValue("deckchen", "Unklar");
-      break;
-    case "erinnerung_ja":
-      frontendTestSetValue("erinnerung", "Ja");
-      break;
-    case "erinnerung_unklar":
-      frontendTestSetValue("erinnerung", "Unklar");
-      break;
-
-    case "komm_englisch":
-      frontendTestClearChecks("kommunikationCheck");
-      frontendTestCheckByValue("kommunikationCheck", "Englisch möglich");
-      break;
-    case "komm_kein_deutsch":
-      frontendTestClearChecks("kommunikationCheck");
-      frontendTestCheckByValue("kommunikationCheck", "Kein Deutsch");
-      break;
-    case "komm_wenig_deutsch":
-      frontendTestClearChecks("kommunikationCheck");
-      frontendTestCheckByValue("kommunikationCheck", "Wenig Deutsch");
-      break;
-    case "komm_schwierig":
-      frontendTestClearChecks("kommunikationCheck");
-      frontendTestCheckByValue("kommunikationCheck", "Kommunikation schwierig");
-      break;
-    case "komm_uebersetzung":
-      frontendTestClearChecks("kommunikationCheck");
-      frontendTestCheckByValue("kommunikationCheck", "Übersetzungsprogramm funktioniert gut");
-      break;
-
-    case "med_besonderheiten_einzeln":
-      frontendTestSetValue("besonderheitStatus", "Ja");
-      recalcAll();
-      frontendTestCheckByValue("besonderheitCheck", "Hydrocephalus");
-      break;
-    case "med_besonderheiten_mehrere":
-      frontendTestSetValue("besonderheitStatus", "Ja");
-      recalcAll();
-      frontendTestCheckByValue("besonderheitCheck", "Hydrocephalus");
-      frontendTestCheckByValue("besonderheitCheck", "Lippen-Kiefer-Gaumenspalte");
-      frontendTestCheckByValue("besonderheitCheck", "Spina bifida");
-      break;
-    case "infekt_nein":
-      frontendTestSetValue("infektStatus", "Nein");
-      break;
-    case "infekt_unklar":
-      frontendTestSetValue("infektStatus", "Unklar");
-      break;
-    case "infekt_ja_checkbox":
-      frontendTestSetValue("infektStatus", "Ja");
-      recalcAll();
-      frontendTestCheckByValue("infektCheck", "MRSA Krankenhauskeim");
-      frontendTestSetValue("schutzkleidung", "Ja");
-      break;
-    case "infekt_ja_freitext":
-      frontendTestSetValue("infektStatus", "Ja");
-      recalcAll();
-      frontendTestSetValue("infektErgaenzung", "zusätzlicher Testinfekt");
-      break;
-    case "infekt_ja_beides":
-      frontendTestSetValue("infektStatus", "Ja");
-      recalcAll();
-      frontendTestCheckByValue("infektCheck", "MRSA Krankenhauskeim");
-      frontendTestSetValue("infektErgaenzung", "zusätzlicher Testinfekt");
-      frontendTestSetValue("schutzkleidung", "Ja");
-      break;
-    case "infekt_fehler_leer":
-      frontendTestSetValue("infektStatus", "Ja");
-      break;
-
-    case "abschluss_sofort_los":
-      frontendTestSetValue("abschlussfrage", "Wer kann sofort los?");
-      frontendTestSetChecked("vorLosfahrtAnrufen", true);
-      break;
-    case "abschluss_uebernehmen":
-      frontendTestSetValue("abschlussfrage", "Wer kann denn hier übernehmen?");
-      frontendTestSetChecked("vorLosfahrtAnrufen", true);
-      break;
-    case "abschluss_bereithalten":
-      frontendTestSetValue("abschlussfrage", "Wer kann sich denn hier bereithalten und als Ansprechpartner zur Verfügung stehen?");
-      frontendTestSetChecked("vorLosfahrtAnrufen", true);
-      break;
-    case "abschluss_ohne_anruf":
-      frontendTestSetValue("abschlussfrage", "Wer kann sofort los?");
-      frontendTestSetChecked("vorLosfahrtAnrufen", false);
-      break;
-  }
-
-  recalcAll();
 }
 
 function updateReport(){
@@ -4205,6 +4204,257 @@ document.addEventListener("change", function(e){
     updateSituationByMehrlingsRegel();
   }
 }, true);
+
+/* FRONTEND_TEST_16062026_1326 */
+function frontendSetValue(id, value){
+  const el = $(id);
+  if(!el) return;
+  el.value = value;
+  el.dispatchEvent(new Event("input", { bubbles:true }));
+  el.dispatchEvent(new Event("change", { bubbles:true }));
+}
+
+function frontendSetChecked(id, checked){
+  const el = $(id);
+  if(!el) return;
+  el.checked = checked;
+  el.dispatchEvent(new Event("change", { bubbles:true }));
+}
+
+function frontendCheckByValue(selector, value, checked=true){
+  const el = Array.from(document.querySelectorAll(selector)).find(input => input.value === value);
+  if(!el) return;
+  el.checked = checked;
+  el.dispatchEvent(new Event("change", { bubbles:true }));
+}
+
+function frontendResetForm(){
+  document.querySelectorAll("input, select, textarea").forEach(el => {
+    if(el.closest(".frontend-test-panel")) return;
+    if(el.type === "radio" || el.type === "checkbox"){
+      el.checked = false;
+    }else{
+      el.value = "";
+    }
+    el.disabled = false;
+  });
+
+  currentWorkIndex = 0;
+  frontendSetChecked("consent_yes", true);
+  frontendSetValue("mitarbeiter", "Test");
+  if($("resetInputsBtn")) $("resetInputsBtn").disabled = true;
+  if($("copyStatus")) $("copyStatus").textContent = "";
+  recalcAll();
+}
+
+function frontendBase(){
+  frontendSetValue("ansprechpartner", "Jenny");
+  frontendSetValue("funktion", "Schwester");
+  frontendSetValue("gespraech", "lieb");
+  frontendSetValue("telefon", "01234 56789");
+  frontendSetValue("eltern", "Familie Test");
+  frontendSetValue("kindName", "Mika");
+  frontendSetValue("geschlecht", "Unbekannt");
+  frontendSetValue("kindFamilie", "2. Kind");
+  recalcAll();
+  frontendSetValue("kinderHand", "1 Kind an der Hand");
+  frontendSetValue("elternDabei", "Ja");
+  recalcAll();
+  frontendSetValue("infektStatus", "Nein");
+  frontendSetValue("besonderheitStatus", "Nein");
+  frontendSetValue("kommunikationAktiv", "Ja");
+  recalcAll();
+}
+
+function loadFrontendTestCase(){
+  const test = val("frontendTestSelect");
+  if(!test) return;
+
+  frontendResetForm();
+  frontendBase();
+
+  if(test === "verstorben_basis"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendSetValue("sternenkindErgaenzung", "Basis-Testfall verstorben.");
+  }
+
+  if(test === "noch_lebend_basis"){
+    frontendSetValue("aktuelleSituation", "noch lebend");
+    recalcAll();
+    frontendSetValue("aktuellesAlter", "24 woch");
+  }
+
+  if(test === "lebendbilder_kritisch"){
+    frontendSetValue("aktuelleSituation", "Lebendbilder");
+    recalcAll();
+    frontendSetValue("aktuellesAlter", "1 ta");
+    frontendSetValue("lebendbilderPrognose", "Zustand sehr kritisch");
+  }
+
+  if(test === "bilder_nach_versterben_wm"){
+    frontendSetValue("aktuelleSituation", "noch lebend – Bilder erst nach Versterben");
+    recalcAll();
+    frontendSetValue("aktuellesAlter", "1 ta");
+    frontendSetValue("wasser", "Nach Versterben");
+    frontendSetValue("sternenkindErgaenzung", "Zusatzinfo zur Situation.");
+  }
+
+  if(test === "bilder_nach_versterben_unklar"){
+    frontendSetValue("aktuelleSituation", "noch lebend – Bilder erst nach Versterben");
+    recalcAll();
+    frontendSetValue("aktuellesAlter", "24 woch");
+    frontendSetValue("wasser", "Nach Versterben unklar");
+    frontendSetValue("wasserErgaenzung", "Bitte vor Ort erneut klären.");
+    frontendSetValue("sternenkindErgaenzung", "Die Familie möchte erst nach dem Versterben Bilder.");
+  }
+
+  if(test === "einleitung_begonnen"){
+    frontendSetValue("aktuelleSituation", "Einleitung");
+    recalcAll();
+    frontendSetValue("ksElDetail", "Die Einleitung hat begonnen.");
+    frontendSetValue("ksElZeit", "heute Morgen");
+    frontendSetChecked("einleitungWehen", true);
+    frontendSetValue("wasser", "Nach Geburt unklar");
+  }
+
+  if(test === "einleitung_geplant"){
+    frontendSetValue("aktuelleSituation", "Einleitung");
+    recalcAll();
+    frontendSetValue("ksElDetail", "Die Einleitung ist geplant.");
+    frontendSetValue("ksElZeit", "morgen früh");
+    frontendSetValue("wasser", "Nach Geburt");
+  }
+
+  if(test === "ks_geplant_heute"){
+    frontendSetValue("aktuelleSituation", "Kaiserschnitt");
+    recalcAll();
+    frontendSetValue("ksElDetail", "Der Kaiserschnitt ist geplant.");
+    frontendSetValue("ksElZeit", "heute Vormittag");
+    recalcAll();
+    frontendSetValue("wasser", "Nach Geburt");
+  }
+
+  if(test === "ks_stattgefunden_gestern"){
+    frontendSetValue("aktuelleSituation", "Kaiserschnitt");
+    recalcAll();
+    frontendSetValue("ksElDetail", "Der Kaiserschnitt hat stattgefunden.");
+    frontendSetValue("ksElZeit", "gestern Abend");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+  }
+
+  if(test === "zwillinge_ein_verstorben"){
+    frontendSetValue("kindName", "Mika Noah");
+    recalcAll();
+    frontendSetValue("aktuelleSituation", "verstorben");
+    frontendSetValue("mehrlinge", "Zwillinge – ein Kind verstorben, ein Kind lebt");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+  }
+
+  if(test === "zwillinge_beide_verstorben"){
+    frontendSetValue("kindName", "Mika Noah");
+    recalcAll();
+    frontendSetValue("aktuelleSituation", "verstorben");
+    frontendSetValue("mehrlinge", "Zwillinge – beide Kinder verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+  }
+
+  if(test === "drillinge_zwei_verstorben"){
+    frontendSetValue("kindName", "Mika Noah Emma");
+    recalcAll();
+    frontendSetValue("aktuelleSituation", "verstorben");
+    frontendSetValue("mehrlinge", "Drillinge – zwei Kinder verstorben, ein Kind lebt");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+  }
+
+  if(test === "infekte_ja_freitext"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendSetValue("infektStatus", "Ja");
+    recalcAll();
+    frontendSetValue("infektErgaenzung", "Infektangaben liegen nur teilweise vor.");
+    frontendSetValue("schutzkleidung", "Unklar");
+  }
+
+  if(test === "besonderheiten_ja"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendSetValue("besonderheitStatus", "Ja");
+    recalcAll();
+    frontendCheckByValue(".besonderheitCheck", "Hydrocephalus");
+    frontendCheckByValue(".besonderheitCheck", "Lippen-Kiefer-Gaumenspalte");
+  }
+
+  if(test === "kommunikation_englisch"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendCheckByValue(".kommunikationCheck", "Englisch möglich");
+  }
+
+  if(test === "kein_deutsch"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendCheckByValue(".kommunikationCheck", "Kein Deutsch");
+    frontendCheckByValue(".kommunikationCheck", "Übersetzungsprogramm funktioniert gut");
+  }
+
+  if(test === "familie_geschwister"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendSetValue("kindFamilie", "3. Kind");
+    recalcAll();
+    frontendSetValue("kinderHand", "2 Kinder an der Hand");
+    frontendSetValue("elternDabei", "Ja");
+    recalcAll();
+    frontendSetValue("geschwisterDabei", "Ja");
+  }
+
+  if(test === "kleidung_deckchen_erinnerung"){
+    frontendSetValue("aktuelleSituation", "verstorben");
+    recalcAll();
+    frontendSetValue("wasser", "Ja");
+    frontendSetValue("kleidung", "Ja");
+    frontendSetValue("deckchen", "Nein");
+    frontendSetValue("erinnerung", "Ja");
+  }
+
+  recalcAll();
+}
+
+function loadFrontendCustomVariant(){
+  frontendResetForm();
+  frontendBase();
+
+  if(val("customSituation")){
+    frontendSetValue("aktuelleSituation", val("customSituation"));
+  }
+  recalcAll();
+
+  if(val("customAlter")){
+    frontendSetValue("aktuellesAlter", val("customAlter"));
+  }
+
+  if(val("customWasser")){
+    frontendSetValue("wasser", val("customWasser"));
+  }
+
+  if(val("customInfo")){
+    frontendSetValue("sternenkindErgaenzung", val("customInfo"));
+  }
+
+  recalcAll();
+}
+
 </script>
 </body>
 </html>
