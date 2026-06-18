@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>FRONTEND_TEST_17062026_1522d_MASTER_SYNC</title>
+<title>index</title>
 <style>
 :root{
   --bg:#eaf0f4;
@@ -957,7 +957,7 @@ body.consent-ok section.step[data-title="Einverständnis"] h2{
     <button type="button" onclick="loadFrontendCustomVariant()">Eigene Variante laden</button>
   </div>
   <div class="frontend-test-note">
-    Teststand synchron zu MASTER_17062026_1522. Mehrlinge werden mit Komma getrennten Namen geladen. Ungültige Kombinationen wie „noch lebend“ ohne Palliativ oder WM bei „Bilder erst nach Versterben“ werden nicht gesetzt.
+    Teststand synchron zu MASTER_17062026_1522_FIX19. Mehrlinge werden mit Komma getrennten Namen geladen. Ungültige Kombinationen wie „noch lebend“ ohne Palliativ oder WM bei „Bilder erst nach Versterben“ werden nicht gesetzt.
   </div>
 </section>
 
@@ -1006,7 +1006,23 @@ body.consent-ok section.step[data-title="Einverständnis"] h2{
 </section>
 <section class="step" data-title="Sternenkind">
 <h2>Angaben zum Sternenkind</h2>
-<div class="grid3"><div class="field-wrap" id="elternWrapField"><label class="field-label" for="eltern">Namen der Eltern</label><input id="eltern" placeholder="Namen der Eltern"/></div><div class="field-wrap" id="kindNameWrapField"><label class="field-label" for="kindName">Vorname des Kindes / der Kinder (optional)</label><input id="kindName" placeholder="Vorname des Kindes / der Kinder (optional)"/></div><div class="field-wrap" id="geschlechtWrapField"><label class="field-label" for="geschlecht">Geschlecht des Kindes</label><select id="geschlecht"><option value=""></option><optgroup label="Einling"><option value="Mädchen">Mädchen</option><option value="Junge">Junge</option><option value="Unbekannt">Unbekannt</option></optgroup><optgroup label="Zwillinge"><option value="MM">Zwillinge (MM)</option><option value="JJ">Zwillinge (JJ)</option><option value="MJ">Zwillinge (MJ)</option><option value="JM">Zwillinge (JM)</option><option value="Unbekannt">Zwillinge (unbekannt)</option></optgroup><optgroup label="Drillinge"><option value="MMM">Drillinge (MMM)</option><option value="JJJ">Drillinge (JJJ)</option><option value="MMJ">Drillinge (MMJ)</option><option value="MJM">Drillinge (MJM)</option><option value="JMM">Drillinge (JMM)</option><option value="JJM">Drillinge (JJM)</option><option value="JMJ">Drillinge (JMJ)</option><option value="MJJ">Drillinge (MJJ)</option><option value="Unbekannt">Drillinge (unbekannt)</option></optgroup></select></div><div class="field-wrap" id="aktuelleSituationWrapField"><label class="field-label" for="aktuelleSituation">Aktuelle Situation des Kindes</label><select id="aktuelleSituation">
+<div class="grid3"><div class="field-wrap" id="elternWrapField"><label class="field-label" for="eltern">Namen der Eltern</label><input id="eltern" placeholder="Namen der Eltern"/></div><div class="field-wrap" id="kindNameWrapField"><label class="field-label" for="kindName">Vorname des Kindes / der Kinder (optional)</label><input id="kindName" placeholder="Vorname des Kindes / der Kinder (optional)"/></div><div class="field-wrap" id="geschlechtWrapField"><label class="field-label" for="geschlecht">Geschlecht des Kindes</label><select id="geschlecht">
+<option value=""></option>
+<option value="Mädchen">Mädchen</option>
+<option value="Junge">Junge</option>
+<option value="Unbekannt">Unbekannt</option>
+<optgroup label="Zwillinge">
+<option value="JJ">Zwillinge (JJ)</option>
+<option value="MM">Zwillinge (MM)</option>
+<option value="MJ">Zwillinge (MJ)</option>
+</optgroup>
+<optgroup label="Drillinge">
+<option value="JJJ">Drillinge (JJJ)</option>
+<option value="MMM">Drillinge (MMM)</option>
+<option value="JJM">Drillinge (JJM)</option>
+<option value="MMJ">Drillinge (MMJ)</option>
+</optgroup>
+</select></div><div class="field-wrap" id="aktuelleSituationWrapField"><label class="field-label" for="aktuelleSituation">Aktuelle Situation des Kindes</label><select id="aktuelleSituation">
 <option value=""></option>
 <option value="verstorben">verstorben</option>
 <option value="Lebendbilder">Lebendbilder</option>
@@ -1688,30 +1704,23 @@ function updateGeschlechtOptions(){
   if(count === 2){
     groups = [
       {label:"Zwillinge", options:[
-        ["MM","Zwillinge (MM)"],
         ["JJ","Zwillinge (JJ)"],
-        ["MJ","Zwillinge (MJ)"],
-        ["JM","Zwillinge (JM)"],
-        ["Unbekannt","Zwillinge (unbekannt)"]
+        ["MM","Zwillinge (MM)"],
+        ["MJ","Zwillinge (MJ)"]
       ]}
     ];
   }else if(count >= 3){
     groups = [
       {label:"Drillinge", options:[
-        ["MMM","Drillinge (MMM)"],
         ["JJJ","Drillinge (JJJ)"],
-        ["MMJ","Drillinge (MMJ)"],
-        ["MJM","Drillinge (MJM)"],
-        ["JMM","Drillinge (JMM)"],
+        ["MMM","Drillinge (MMM)"],
         ["JJM","Drillinge (JJM)"],
-        ["JMJ","Drillinge (JMJ)"],
-        ["MJJ","Drillinge (MJJ)"],
-        ["Unbekannt","Drillinge (unbekannt)"]
+        ["MMJ","Drillinge (MMJ)"]
       ]}
     ];
   }else{
     groups = [
-      {label:"Einling", options:[
+      {label:"", options:[
         ["Mädchen","Mädchen"],
         ["Junge","Junge"],
         ["Unbekannt","Unbekannt"]
@@ -4698,7 +4707,7 @@ document.addEventListener('change', function(e){
       case "bilder_nach_versterben_unklar":
         setSituation("noch lebend – Bilder erst nach Versterben");
         setValue("aktuellesAlter", test === "bilder_nach_versterben_unklar" ? "24 Wochen" : "1 Tag");
-        setValue("sternenkindErgaenzung", "Die Familie möchte erst nach dem Versterben Bilder.");
+        setValue("sternenkindErgaenzung", "");
         clearWasser();
         break;
 
